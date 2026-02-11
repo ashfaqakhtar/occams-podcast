@@ -1,46 +1,73 @@
 "use client";
+
 import Link from "next/link";
 import Image from "next/image";
 import VideoSlider from "@/components/VideoSlider";
 import StatsWave from "@/components/StatsWave";
-import CardStack from "@/components/CardStack";
+import { Fragment } from "react";
 
-export default function Home() {
-  return (
-    <>
-      <section className="hero-section h-screen flex justify-center items-center relative ">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 lg:grid-cols-2 justify-center">
-            <div></div>
-            <div>
-              <small className="text-white font-inter text-[1.375rem] font-light leading-7.5">A podcast by Powered Occams Digital </small>
-              <h1 className="py-4 text-white font-inter text-[4.375rem] font-medium leading-19.5 tracking-[-0.13125rem]">Inception to Infinity</h1>
-              <p className="text-white font-inter text-lg font-light leading-7.5">Strategic conversations with founders, CEOs, and industry builders, tracing how bold ideas move from inception to lasting, real-world impact through decisive moments and hard-won insight.</p>
-            </div>
-          </div>
-        </div>
+const Home = () => {
+    return (
+        <Fragment>
+            <section style={{ backgroundImage: `url(/images/hero-banner.webp)` }} className={`bg-cover bg-center h-screen
+                flex justify-center items-center relative sm:px-10 px-5`}>
+                <div className="container mx-auto h-full">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 h-full lg:gap-8 gap-5">
+                        <div className={`h-full flex justify-end flex-col lg:items-end items-start -mt-10 
+                            lg:order-0 order-1`}>
 
-        <div className="container absolute left-[15%] bottom-10  mx-auto px-4 w-fit">
-          <div className="grid grid-cols-1 ">
-            <div className="rounded-[3rem] bg-white/10 backdrop-blur-[23.4px] pt-1.75 pr-8.25 pb-4.25 pl-9">
-              <small>Listen on:</small>
-              <div className="flex gap-4">
-                <Link href={""}><Image className="w-auto" src="/logo/podcast-1.svg" alt="podcast" width={0} height={40} priority /></Link>
-                <Link href={""}><Image className="w-auto" src="/logo/spotify-1.svg" alt="Spotify" width={0} height={40} priority /></Link>
-                <Link href={""}><Image className="w-auto" src="/logo/youtube-1.svg" alt="youtube" width={0} height={40} priority /></Link>
-                <Link href={""}><Image className="w-auto" src="/logo/exclude.svg" alt="exclude" width={0} height={40} priority /></Link>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+                            <div className="w-max h-max rounded-full bg-white/10 backdrop-blur-[23.4px] px-10 pt-3 pb-4">
+                                <small className="text-white">Listen on:</small>
 
-      <VideoSlider />
+                                <div className="flex gap-4 mt-1.5">
+                                    <Link href="">
+                                        <Image className="w-auto" src="/logo/podcast.svg" alt="podcast"
+                                            width={0} height={40} priority />
+                                    </Link>
 
-      <StatsWave />
+                                    <Link href="">
+                                        <Image className="w-auto" src="/logo/spotify.svg" alt="Spotify"
+                                            width={0} height={40} priority />
+                                    </Link>
 
-     
-    </>
-  );
+                                    <Link href="">
+                                        <Image className="w-auto" src="/logo/youtube.svg" alt="youtube"
+                                            width={0} height={40} priority />
+                                    </Link>
+
+                                    <Link href="">
+                                        <Image className="w-auto" src="/logo/exclude.svg" alt="exclude"
+                                            width={0} height={40} priority />
+                                    </Link>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="flex lg:justify-center justify-end flex-col lg:order-1 order-0">
+                            <small className="text-white font-inter text-[1.375rem] font-light leading-7.5">
+                                A podcast by Powered Occams Digital
+                            </small>
+
+                            <h1 className={`py-4 text-white font-inter text-[4.375rem] font-medium leading-19.5 
+                                tracking-[-0.13125rem]`}>
+                                Inception to Infinity
+                            </h1>
+
+                            <p className="text-white font-inter text-lg font-light leading-7.5">
+                                Strategic conversations with founders, CEOs, and industry builders, tracing how bold ideas
+                                move from inception to lasting, real-world impact through decisive moments and hard-won
+                                insight.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <VideoSlider />
+
+            <StatsWave />
+        </Fragment>
+    );
 }
 
+export default Home
