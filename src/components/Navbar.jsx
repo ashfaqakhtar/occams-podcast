@@ -38,9 +38,10 @@ const Navbar = () => {
         {/* LOGO */}
         <Link href="/">
           <Image
+            className="w-auto"
             src="/logo/occams-podcast.svg"
             alt="Occams Podcast"
-            width={150}
+            width={0}
             height={40}
             priority
           />
@@ -69,10 +70,9 @@ const Navbar = () => {
                 font-inter text-base font-medium leading-8 tracking-[-0.01rem]
                 transition
 
-                ${
-                  isActive(link.path)
-                    ? "text-orange-400"
-                    : "text-white hover:text-orange-400"
+                ${isActive(link.path)
+                  ? "text-orange-400"
+                  : "text-white hover:text-orange-400"
                 }
               `}
             >
@@ -87,10 +87,9 @@ const Navbar = () => {
           className={`
             hidden md:block rounded-[2.5rem] py-2.5 px-7 text-lg font-semibold transition
 
-            ${
-              isActive("/login")
-                ? "bg-[#F16A21] text-white"
-                : "bg-white text-[#F16A21] hover:bg-[#F16A21] hover:text-white"
+            ${isActive("/login")
+              ? "bg-[#F16A21] text-white"
+              : "bg-white text-[#F16A21] hover:bg-[#F16A21] hover:text-white"
             }
           `}
         >
@@ -141,10 +140,9 @@ const Navbar = () => {
             className={`
               block mt-3 text-center rounded-full py-2
 
-              ${
-                isActive("/login")
-                  ? "bg-[#F16A21] text-white"
-                  : "bg-white text-[#F16A21]"
+              ${isActive("/login")
+                ? "bg-[#F16A21] text-white"
+                : "bg-white text-[#F16A21]"
               }
             `}
           >

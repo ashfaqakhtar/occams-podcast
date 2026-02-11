@@ -109,9 +109,28 @@ export default function PlaylistGridPage() {
   }, [videos, activeTab, q]);
 
   return (
-    <section className="min-h-screen bg-black text-white">
-      {/* single-file CSS (for clamp + nice scroll) */}
-      <style jsx global>{`
+
+    <>
+
+      <section className="hero-section h-screen flex justify-center items-center">
+        <div className="container mx-auto px-4">
+
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 justify-center">
+            <div></div>
+            <div>
+              <small className="text-white font-inter text-[1.375rem] font-light leading-7.5">A podcast by Powered Occams Digital </small>
+              <h1 className="text-white font-inter text-[4.375rem] font-medium leading-19.5 tracking-[-0.13125rem]">Inception to Infinity</h1>
+              <p className="text-white font-inter text-lg font-light leading-7.5">Strategic conversations with founders, CEOs, and industry builders, tracing how bold ideas move from inception to lasting, real-world impact through decisive moments and hard-won insight.</p>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <section className="min-h-screen bg-black text-white">
+        {/* single-file CSS (for clamp + nice scroll) */}
+        <style jsx global>{`
         .lineClamp2 {
           display: -webkit-box;
           -webkit-box-orient: vertical;
@@ -126,97 +145,99 @@ export default function PlaylistGridPage() {
         }
       `}</style>
 
-      {/* Background glow like screenshot */}
-      <div className="relative">
-        <div className="pointer-events-none absolute inset-0">
-          <div className="absolute -top-40 right-0 h-[520px] w-[680px] rounded-full bg-[#ff6a00]/20 blur-[120px]" />
-          <div className="absolute left-[-200px] top-40 h-[520px] w-[520px] rounded-full bg-[#ff6a00]/10 blur-[140px]" />
-        </div>
+        {/* Background glow like screenshot */}
+        <div className="relative">
+          <div className="pointer-events-none absolute inset-0">
+            <div className="absolute -top-40 right-0 h-130 w-170 rounded-full bg-[#ff6a00]/20 blur-[120px]" />
+            <div className="absolute -left-50 top-40 h-130 w-130 rounded-full bg-[#ff6a00]/10 blur-[140px]" />
+          </div>
 
-        <div className="relative mx-auto w-full container mx-auto px-4 py-10 md:py-12">
-          {/* Top pill nav */}
-          <div className="rounded-full border border-white/10 bg-white/5 px-3 py-2 backdrop-blur-md">
-            <div className="flex items-center gap-2 overflow-x-auto">
-              {TABS.map((t) => {
-                const active = t.id === activeTab;
-                return (
-                  <button
-                    key={t.id}
-                    onClick={() => setActiveTab(t.id)}
-                    className={[
-                      "shrink-0 rounded-full px-4 py-2 text-xs md:text-sm transition",
-                      active
-                        ? "bg-[#ff6a00] text-black"
-                        : "text-white/70 hover:text-white",
-                    ].join(" ")}
-                  >
-                    {t.label}
-                  </button>
-                );
-              })}
+          <div className="relative mx-auto w-full container px-4 py-10 md:py-12">
+            {/* Top pill nav */}
+            <div className="rounded-full border border-white/10 bg-white/5 px-3 py-2 backdrop-blur-md">
+              <div className="flex items-center gap-2 overflow-x-auto">
+                {TABS.map((t) => {
+                  const active = t.id === activeTab;
+                  return (
+                    <button
+                      key={t.id}
+                      onClick={() => setActiveTab(t.id)}
+                      className={[
+                        "shrink-0 rounded-full px-4 py-2 text-xs md:text-sm transition",
+                        active
+                          ? "bg-[#ff6a00] text-black"
+                          : "text-white/70 hover:text-white",
+                      ].join(" ")}
+                    >
+                      {t.label}
+                    </button>
+                  );
+                })}
 
-              <div className="ml-auto flex items-center gap-2 pl-2">
-                <div className="relative">
-                  <input
-                    value={q}
-                    onChange={(e) => setQ(e.target.value)}
-                    placeholder="Search..."
-                    className="w-[160px] md:w-[220px] rounded-full border border-white/10 bg-black/30 px-4 py-2 pr-10 text-xs md:text-sm text-white/90 outline-none placeholder:text-white/35 focus:border-white/25"
-                  />
-                  <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-white/45">
-                    🔍
-                  </span>
+                <div className="ml-auto flex items-center gap-2 pl-2">
+                  <div className="relative">
+                    <input
+                      value={q}
+                      onChange={(e) => setQ(e.target.value)}
+                      placeholder="Search..."
+                      className="w-40 md:w-55 rounded-full border border-white/10 bg-black/30 px-4 py-2 pr-10 text-xs md:text-sm text-white/90 outline-none placeholder:text-white/35 focus:border-white/25"
+                    />
+                    <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-white/45">
+                      🔍
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
 
-          {!API_KEY && (
-            <div className="mt-6 rounded-2xl border border-red-500/30 bg-red-500/10 p-4 text-sm text-red-100">
-              NEXT_PUBLIC_YOUTUBE_API_KEY missing.
-              <div className="mt-2 text-xs text-red-100/80">
-                .env.local:
-                <br />
-                <code className="rounded bg-black/30 px-2 py-1">
-                  NEXT_PUBLIC_YOUTUBE_API_KEY=YOUR_KEY
-                </code>
-                <br />
-                <code className="rounded bg-black/30 px-2 py-1">
-                  NEXT_PUBLIC_YOUTUBE_PLAYLIST_ID={PLAYLIST_ID}
-                </code>
+            {!API_KEY && (
+              <div className="mt-6 rounded-2xl border border-red-500/30 bg-red-500/10 p-4 text-sm text-red-100">
+                NEXT_PUBLIC_YOUTUBE_API_KEY missing.
+                <div className="mt-2 text-xs text-red-100/80">
+                  .env.local:
+                  <br />
+                  <code className="rounded bg-black/30 px-2 py-1">
+                    NEXT_PUBLIC_YOUTUBE_API_KEY=YOUR_KEY
+                  </code>
+                  <br />
+                  <code className="rounded bg-black/30 px-2 py-1">
+                    NEXT_PUBLIC_YOUTUBE_PLAYLIST_ID={PLAYLIST_ID}
+                  </code>
+                </div>
               </div>
+            )}
+
+            {/* Grid */}
+            <div className="mt-8 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {loading
+                ? Array.from({ length: 6 }).map((_, i) => (
+                  <SkeletonCard key={i} />
+                ))
+                : filtered.map((v) => <EpisodeCard key={v.videoId} v={v} />)}
             </div>
-          )}
 
-          {/* Grid */}
-          <div className="mt-8 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {loading
-              ? Array.from({ length: 6 }).map((_, i) => (
-                <SkeletonCard key={i} />
-              ))
-              : filtered.map((v) => <EpisodeCard key={v.videoId} v={v} />)}
-          </div>
-
-          {/* Pagination */}
-          <div className="mt-8 flex items-center justify-center gap-3">
-            <button
-              disabled={!prevToken || loading}
-              onClick={() => fetchPlaylist(prevToken || "")}
-              className="rounded-full border border-white/10 bg-white/5 px-5 py-2 text-sm text-white/80 hover:bg-white/10 disabled:opacity-40"
-            >
-              Prev
-            </button>
-            <button
-              disabled={!nextToken || loading}
-              onClick={() => fetchPlaylist(nextToken || "")}
-              className="rounded-full border border-white/10 bg-white/5 px-5 py-2 text-sm text-white/80 hover:bg-white/10 disabled:opacity-40"
-            >
-              Next
-            </button>
+            {/* Pagination */}
+            <div className="mt-8 flex items-center justify-center gap-3">
+              <button
+                disabled={!prevToken || loading}
+                onClick={() => fetchPlaylist(prevToken || "")}
+                className="rounded-full border border-white/10 bg-white/5 px-5 py-2 text-sm text-white/80 hover:bg-white/10 disabled:opacity-40"
+              >
+                Prev
+              </button>
+              <button
+                disabled={!nextToken || loading}
+                onClick={() => fetchPlaylist(nextToken || "")}
+                className="rounded-full border border-white/10 bg-white/5 px-5 py-2 text-sm text-white/80 hover:bg-white/10 disabled:opacity-40"
+              >
+                Next
+              </button>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+
+    </>
   );
 }
 
@@ -234,14 +255,14 @@ function EpisodeCard({ v }) {
   return (
     <div className="group overflow-hidden rounded-2xl border border-[#ff6a00]/25 bg-white/5 shadow-[0_25px_70px_rgba(0,0,0,0.55)]">
       {/* Thumbnail */}
-      <div className="relative aspect-[16/9] overflow-hidden">
+      <div className="relative aspect-video overflow-hidden">
         <img
           src={v.thumb}
           alt={v.title}
           className="h-full w-auto"
           loading="lazy"
         />
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/45 via-black/0 to-black/0" />
+        <div className="pointer-events-none absolute inset-0 bg-linear-to-t from-black/45 via-black/0 to-black/0" />
       </div>
 
       {/* Body */}
@@ -289,7 +310,7 @@ function EpisodeCard({ v }) {
 function SkeletonCard() {
   return (
     <div className="overflow-hidden rounded-2xl border border-white/10 bg-white/5">
-      <div className="aspect-[16/9] animate-pulse bg-white/10" />
+      <div className="aspect-video animate-pulse bg-white/10" />
       <div className="p-5">
         <div className="h-6 w-24 animate-pulse rounded-full bg-white/10" />
         <div className="mt-4 h-4 w-3/4 animate-pulse rounded bg-white/10" />
