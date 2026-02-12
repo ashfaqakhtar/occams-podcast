@@ -1,28 +1,29 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
-
-
+import Footer from "@/components/Footer";
 
 const inter = Inter({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+    subsets: ["latin"],
+    weight: ["400", "500", "600", "700"],
 });
 
 export const metadata = {
-  title: "Occams Podcast",
-  description: "Powered By Occams Digital",
+    title: "Occams Podcast",
+    description: "Powered By Occams Digital",
 };
 
 export default function RootLayout({ children }) {
-  return (
-    <html lang="en">
-      <body
-        className={`${inter.className} antialiased`}>
-        <Navbar />
-        {children}
+    return (
+        <html lang="en">
+            <body
+                className={`${inter.className} antialiased`}>
+                <Navbar />
 
-      </body>
-    </html>
-  );
+                {children}
+
+                <Footer />
+            </body>
+        </html>
+    );
 }

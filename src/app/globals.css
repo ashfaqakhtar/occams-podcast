@@ -31,13 +31,6 @@ body {
   }
 }
 
-
-.hero-section {
-  background: url("/images/hero-banner.webp");
-  background-position: center;
-  background-size: cover;
-}
-
 @keyframes waveFloat {
   0% {
     transform: translateY(0px);
@@ -266,13 +259,11 @@ body {
   position: absolute;
   inset: -20%;
   background:
-    repeating-linear-gradient(
-      135deg,
+    repeating-linear-gradient(135deg,
       rgba(255, 255, 255, 0.08) 0,
       rgba(255, 255, 255, 0.08) 6px,
       transparent 6px,
-      transparent 14px
-    );
+      transparent 14px);
   opacity: 0.35;
 }
 
@@ -282,11 +273,9 @@ body {
   inset: 18% 8% auto 30%;
   width: 120px;
   height: 120px;
-  background: radial-gradient(
-    circle,
-    rgba(255, 255, 255, 0.15),
-    transparent 70%
-  );
+  background: radial-gradient(circle,
+      rgba(255, 255, 255, 0.15),
+      transparent 70%);
   opacity: 0.6;
 }
 
@@ -303,11 +292,9 @@ body {
   width: 140px;
   height: 140px;
   border-radius: 50%;
-  background: radial-gradient(
-    circle,
-    rgba(255, 255, 255, 0.14),
-    transparent 70%
-  );
+  background: radial-gradient(circle,
+      rgba(255, 255, 255, 0.14),
+      transparent 70%);
   opacity: 0.6;
 }
 
@@ -316,11 +303,9 @@ body {
   position: absolute;
   inset: auto 0 0 0;
   height: 120px;
-  background: linear-gradient(
-    120deg,
-    rgba(255, 255, 255, 0.06),
-    transparent 60%
-  );
+  background: linear-gradient(120deg,
+      rgba(255, 255, 255, 0.06),
+      transparent 60%);
   opacity: 0.5;
 }
 
@@ -335,13 +320,11 @@ body {
   position: absolute;
   inset: 0;
   background:
-    repeating-linear-gradient(
-      90deg,
+    repeating-linear-gradient(90deg,
       rgba(255, 255, 255, 0.08) 0,
       rgba(255, 255, 255, 0.08) 6px,
       transparent 6px,
-      transparent 16px
-    );
+      transparent 16px);
   opacity: 0.35;
 }
 
@@ -350,11 +333,9 @@ body {
   position: absolute;
   inset: auto 20% 10% 20%;
   height: 110px;
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.12),
-    transparent 70%
-  );
+  background: linear-gradient(180deg,
+      rgba(255, 255, 255, 0.12),
+      transparent 70%);
   opacity: 0.5;
 }
 
@@ -371,11 +352,9 @@ body {
   width: 160px;
   height: 160px;
   border-radius: 50%;
-  background: radial-gradient(
-    circle,
-    rgba(255, 255, 255, 0.12),
-    transparent 70%
-  );
+  background: radial-gradient(circle,
+      rgba(255, 255, 255, 0.12),
+      transparent 70%);
   opacity: 0.6;
 }
 
@@ -386,15 +365,13 @@ body {
   width: 160px;
   height: 160px;
   border-radius: 50%;
-  background: radial-gradient(
-    circle,
-    rgba(255, 255, 255, 0.1),
-    transparent 70%
-  );
+  background: radial-gradient(circle,
+      rgba(255, 255, 255, 0.1),
+      transparent 70%);
   opacity: 0.5;
 }
 
-.stack-card > * {
+.stack-card>* {
   position: relative;
   z-index: 1;
 }
@@ -445,5 +422,11 @@ body {
   .stack-card:nth-child(3),
   .stack-card:nth-child(4) {
     transform: rotate(0deg);
+  }
+}
+
+@media (min-width: 96rem) {
+  .container {
+    max-width: 85rem !important;
   }
 }
