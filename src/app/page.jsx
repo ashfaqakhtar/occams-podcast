@@ -21,11 +21,6 @@ const Home = () => {
 
                                 <div className="flex gap-4 mt-1.5">
                                     <Link href="">
-                                        <Image className="w-auto" src="/logo/podcast.svg" alt="podcast"
-                                            width={0} height={40} priority />
-                                    </Link>
-
-                                    <Link href="">
                                         <Image className="w-auto" src="/logo/spotify.svg" alt="Spotify"
                                             width={0} height={40} priority />
                                     </Link>
@@ -35,10 +30,6 @@ const Home = () => {
                                             width={0} height={40} priority />
                                     </Link>
 
-                                    <Link href="">
-                                        <Image className="w-auto" src="/logo/exclude.svg" alt="exclude"
-                                            width={0} height={40} priority />
-                                    </Link>
                                 </div>
                             </div>
                         </div>
@@ -48,8 +39,7 @@ const Home = () => {
                                 A podcast by Powered Occams Digital
                             </small>
 
-                            <h1 className={`py-4 text-white font-inter text-[4.375rem] font-medium leading-19.5 
-                                tracking-[-0.13125rem]`}>
+                            <h1 className={`py-4 text-white heading-1`}>
                                 Inception to Infinity
                             </h1>
 

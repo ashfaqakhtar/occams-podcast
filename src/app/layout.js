@@ -18,6 +18,7 @@ export default function RootLayout({ children }) {
         <html lang="en">
             <body
                 className={`${inter.className} antialiased`}>
+                <link rel="icon" href="/logo/Fevicon.svg" />
                 <Navbar />
 
                 {children}
