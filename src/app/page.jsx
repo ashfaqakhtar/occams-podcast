@@ -13,7 +13,7 @@ const Home = () => {
                 flex justify-center items-center relative sm:px-10 px-5`}>
                 <div className="container mx-auto h-full">
                     <div className="grid grid-cols-1 lg:grid-cols-2 h-full lg:gap-8 gap-5">
-                        <div className={`h-full flex justify-end flex-col lg:items-end items-start -mt-10 
+                        <div className={`h-full flex flex-row justify-start lg:items-end items-start -mt-10 
                             lg:order-0 order-1`}>
 
                             <div className="w-max h-max rounded-full bg-white/10 backdrop-blur-[23.4px] px-10 pt-3 pb-4">
