@@ -1,12 +1,19 @@
+import Link from 'next/link'
 import React from 'react'
 
-const BtnComponent = ({ btn_title, btn_url, className }) => {
+const BtnComponent = ({ btn_title, btn_url = "#", bgColor = "bg-white", image,
+    textColor = "text-[#EF6A24]", className = "py-3.5 px-8 cta-1"
+}) => {
     return (
         <div>
-            <a href={btn_url} className={`lg:flex rounded-full text-base py-3.5 items-center ${className}
-                font-medium justify-center text-[#EF6A24] bg-white px-8`}>
-                {btn_title}
-            </a>
+            <Link href={btn_url} target="_blank" className={`inline-flex flex-nowrap items-center rounded-full
+                justify-center whitespace-nowrap gap-2.5 ${bgColor} ${textColor} ${className}`}
+            >
+                <span className="whitespace-nowrap">{btn_title}</span>
+                {image && (
+                    <img src={image} alt="Button Image" className="h-auto w-max shrink-0" />
+                )}
+            </Link>
         </div>
     )
 }
