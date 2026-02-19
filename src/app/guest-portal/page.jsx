@@ -1,6 +1,6 @@
 "use client";
 
-import { FAQ_ITEMS } from '@/utils/staticData';
+import { FAQ_ITEMS, GUEST_JOURNEY } from '@/utils/staticData';
 import Link from 'next/link';
 import React, { Fragment, useState } from 'react'
 
@@ -115,6 +115,45 @@ const GuestPortal = () => {
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Your Guest Journey Section */}
+            <section className="sm:px-10 px-5">
+                <div className="container mx-auto">
+                    <h4 className="heading-4 spacing text-white">Your Guest Journey</h4>
+
+                    <div className="py-7 overflow-visible sm:overflow-visible md:overflow-visible">
+                        <div className="relative flex md:flex-row flex-col justify-center items-center">
+                            {GUEST_JOURNEY?.map((data, index) => {
+                                const rotation = index === 0 ? "-rotate-6" : index === 1 ? "rotate-9" : "-rotate-6"
+                                const padding = index === 0 ? "xl:px-12 lg:px-10 md:px-8 px-10" : index === 1 ?
+                                    "xl:px-16 lg:px-14 md:px-10 sm:px-14 px-12" : "xl:px-13 lg:px-11 md:px-8 sm:px-11 px-10"
+
+                                const overlap = index !== 0 ? "md:-ml-15 lg:-ml-25 -mt-10 md:mt-0" : "";
+
+                                return (
+                                    <div key={index} className={`relative cursor-pointer transition-all duration-300 
+                                        ease-in-out will-change-transform hover:z-50 hover:-translate-y-3 active:z-50 
+                                        active:-translate-y-2 ${overlap}`}
+                                    >
+                                        <img src={data?.image} alt={data?.title}
+                                            className="w-100 md:w-auto h-auto object-contain"
+                                        />
+
+                                        <div className={`absolute inset-0 flex flex-col items-start justify-center 
+                                            ${rotation} ${padding}`}
+                                        >
+                                            <h5 className="heading-5 text-white md:max-w-45 max-w-35">
+                                                {data?.title}
+                                            </h5>
+                                            <p className="md:mt-3 mt-2 body-2 text-white lg:pr-20">{data?.desc}</p>
+                                        </div>
+                                    </div>
+                                )
+                            })}
                         </div>
                     </div>
                 </div>

@@ -65,3 +65,44 @@ export const FAQ_ITEMS = [
         des: "Yes. We can share a preview link before publishing for final review of accuracy and context.",
     },
 ];
+
+export const PODCAST_EXISTS = [
+    {
+        title: "Expert Conversation",
+        desc: "Candid, high-signal dialogues with operators, investors, and specialists who work at the sharp end of their industries, unpacking how real decisions get made under real pressure.",
+        image: "/images/expert-card.png",
+    },
+    {
+        title: "Strategic Insights",
+        desc: "Clear, usable thinking on markets, capital, technology, and scale, distilled into ideas you can apply without needing a playbook or a buzzword dictionary.",
+        image: "/images/strategic-card.png",
+    },
+    {
+        title: "Growth Focused",
+        desc: "Practical guidance for companies moving from local traction to wider reach, covering expansion, structure, and the mechanics of sustainable momentum",
+        image: "/images/growth-card.png",
+    },
+    {
+        title: "Human-Centred",
+        desc: "Personal accounts of risk, failure, resilience, and reinvention, revealing the inner shifts that quietly power outward success.",
+        image: "/images/human-card.png",
+    },
+];
+
+export const GUEST_JOURNEY = [
+    {
+        title: "Share Your Vision",
+        desc: "Submit your profile and the core, unique perspective you bring to the dialogue.",
+        image: "/images/your-vision.png",
+    },
+    {
+        title: "Map & Schedule",
+        desc: "We’ll align on sharp themes and find a time that fits your current availability.",
+        image: "/images/map-schedule.png",
+    },
+    {
+        title: "Record & Review",
+        desc: "After we talk, our team edits the session. You review it before we go live.",
+        image: "/images/record-review.png",
+    },
+];

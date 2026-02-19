@@ -3,6 +3,7 @@
 import axios from "axios";
 import { Fragment, useEffect, useMemo, useState } from "react";
 import BtnComponent from "./BtnComponent";
+import { IoIosArrowBack, IoIosArrowDown, IoIosArrowForward } from "react-icons/io";
 
 const Playlist = ({ mode = "page" }) => {
     const API_KEY = "AIzaSyCyzvB_9VsSK6KkOnnfJqDVwerLCrzmMLQ";
@@ -12,8 +13,7 @@ const Playlist = ({ mode = "page" }) => {
     const [allVideos, setAllVideos] = useState([]);
     const [durations, setDurations] = useState({});
     const [error, setError] = useState("");
-
-    const [perPage, setPerPage] = useState(9);
+    const [perPage, setPerPage] = useState(6);
     const [page, setPage] = useState(1);
 
     const isHome = mode === "home";
@@ -167,9 +167,9 @@ const Playlist = ({ mode = "page" }) => {
         fetchDurations(pageVideos.map((v) => v.videoId).filter(Boolean));
     }, [pageVideos]);
 
-    const goToPage = (p) => {
-        if (p < 1 || p > totalPages) return;
-        setPage(p);
+    const goToPage = (page) => {
+        if (page < 1 || page > totalPages) return;
+        setPage(page);
         window.scrollTo({ top: 0, behavior: "smooth" });
     };
 
@@ -287,71 +287,69 @@ const Playlist = ({ mode = "page" }) => {
 
             {!isHome && !error && (
                 <Fragment>
-                    <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
-                        <button
-                            onClick={goPrev}
-                            disabled={page <= 1 || loading}
-                            className="h-10 w-10 rounded-full border border-white/10 bg-white/5 text-white/80 hover:bg-white/10 disabled:opacity-40"
-                            aria-label="Previous"
-                        >
-                            ‹
-                        </button>
-
-                        <div className="flex items-center gap-2">
-                            {pageButtons.map((p, idx) => {
-                                if (p === "...") {
-                                    return (
-                                        <span key={`dots-${idx}`} className="px-2 text-white/40">
-                                            …
-                                        </span>
-                                    );
-                                }
-                                const isActive = p === page;
-                                return (
-                                    <button
-                                        key={p}
-                                        onClick={() => goToPage(p)}
-                                        className={[
-                                            "h-10 min-w-10 rounded-full px-4 text-sm transition",
-                                            isActive
-                                                ? "bg-[#ff6a00] text-black"
-                                                : "border border-white/10 bg-white/5 text-white/80 hover:bg-white/10",
-                                        ].join(" ")}
-                                    >
-                                        {p}
-                                    </button>
-                                );
-                            })}
-                        </div>
-
-                        <button
-                            onClick={goNext}
-                            disabled={page >= totalPages || loading}
-                            className="h-10 w-10 rounded-full border border-white/10 bg-white/5 text-white/80 hover:bg-white/10 disabled:opacity-40"
-                            aria-label="Next"
-                        >
-                            ›
-                        </button>
-
-                        <div className="flex items-center gap-2">
-                            <span className="text-xs text-white/50">Per page:</span>
-                            <select
-                                value={perPage}
-                                onChange={(e) => setPerPage(Number(e.target.value))}
-                                className="rounded-full border border-white/10 bg-black/30 px-3 py-2 text-xs text-white/80 outline-none"
+                    <div className="sm:mt-10 mt-7 flex items-center justify-between gap-7 sm:flex-row">
+                        <div className="relative w-fit">
+                            <select value={perPage} onChange={(e) => setPerPage(Number(e.target.value))}
+                                className={`h-10 rounded-lg px-4 pr-14 border border-white/20 bg-black/30 text-white 
+                                caption-1 outline-none appearance-none transition-all`}
                             >
                                 <option value={6}>6</option>
                                 <option value={9}>9</option>
                                 <option value={12}>12</option>
                                 <option value={18}>18</option>
                             </select>
+
+                            <IoIosArrowDown className={`pointer-events-none absolute right-3 top-1/2 
+                                -translate-y-1/2 text-white caption-1`}
+                            />
+                        </div>
+
+                        <div className="md:flex hidden caption-1 text-white text-center">
+                            {page} - {totalPages} of {allVideos.length}
+                        </div>
+
+                        <div className="flex items-center md:gap-3.5 gap-2">
+                            <button onClick={goPrev} disabled={page <= 1 || loading} className={`h-10 rounded-full 
+                                border border-white/20 bg-white/5 text-white hover:bg-white/20 flex items-center
+                                disabled:opacity-40 cursor-pointer w-10 justify-center`} aria-label="Previous"
+                            >
+                                <IoIosArrowBack />
+                            </button>
+
+                            <div className="hidden sm:flex items-center md:gap-3.5 gap-2">
+                                {pageButtons.map((data, idx) => {
+                                    if (data === "...") {
+                                        return (
+                                            <span key={`dots-${idx}`} className="px-2 text-white">
+                                                ...
+                                            </span>
+                                        );
+                                    }
+                                    const isActive = data === page
+
+                                    return (
+                                        <button key={idx} onClick={() => goToPage(data)} className={`h-10 min-w-10 px-4
+                                            rounded-full caption-2 transition cursor-pointer ${isActive ?
+                                                "bg-[#ff6a00] text-white" : `border-white/20 bg-white/5
+                                                border text-white hover:bg-white/20`}`}
+                                        >
+                                            {data}
+                                        </button>
+                                    );
+                                })}
+                            </div>
+
+                            <button onClick={goNext} disabled={page >= totalPages || loading} aria-label="Next"
+                                className={`h-10 w-10 border border-white/20 bg-white/5 text-white/80 justify-center
+                                cursor-pointer hover:bg-white/20 disabled:opacity-40 rounded-full flex items-center`}
+                            >
+                                <IoIosArrowForward />
+                            </button>
                         </div>
                     </div>
 
-                    <div className="mt-3 text-center text-xs text-white/40">
-                        Page <span className="text-white/70">{page}</span> of{" "}
-                        <span className="text-white/70">{totalPages}</span> • Visible
-                        videos <span className="text-white/70">{allVideos.length}</span>
+                    <div className="flex md:hidden sm:mt-10 mt-7 caption-1 text-white text-center">
+                        {page} - {totalPages} of {allVideos.length}
                     </div>
                 </Fragment>
             )}
