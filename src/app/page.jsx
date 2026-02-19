@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Fragment, useEffect, useMemo, useRef, useState } from "react";
 import BtnComponent from "@/components/BtnComponent";
-import { BADGES_ITEMS } from "@/utils/staticData";
+import { BADGES_ITEMS, PODCAST_EXISTS } from "@/utils/staticData";
 import Highlights from "@/components/Highlights";
 import EpisodeWave from "@/components/EpisodeWave";
 import Playlist from "@/components/Playlist";
@@ -212,7 +212,7 @@ const Home = () => {
         []
     );
 
-    const [active, setActive] = useState(1); // start from middle
+    const [active, setActive] = useState(1);
     const trackRef = useRef(null);
 
     const clampIndex = (i) => {
@@ -223,7 +223,6 @@ const Home = () => {
     const prev = () => setActive((p) => clampIndex(p - 1));
     const next = () => setActive((p) => clampIndex(p + 1));
 
-    // keyboard support
     useEffect(() => {
         const onKey = (e) => {
             if (e.key === "ArrowLeft") prev();
@@ -234,7 +233,6 @@ const Home = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    // ---- simple drag/swipe
     const drag = useRef({ down: false, x: 0, moved: false });
 
     const onDown = (clientX) => {
@@ -259,57 +257,58 @@ const Home = () => {
     const idxLeft = clampIndex(active - 1);
     const idxRight = clampIndex(active + 1);
 
-
     return (
         <Fragment>
-            <section style={{ backgroundImage: `url(/images/hero-banner.webp)` }} className={`bg-cover bg-center
-                h-screen flex justify-center items-center relative sm:px-10 px-5`}
-            >
-                <div className="container mx-auto h-full">
-                    <div className="grid grid-cols-1 lg:grid-cols-2 h-full lg:gap-8 gap-5">
-                        <div className={`h-full flex flex-row justify-start items-end -mt-10 lg:order-0 order-1`}>
-                            <div className="w-max h-max rounded-full bg-white/10 backdrop-blur-[23.4px] px-10 pt-3 pb-4">
-                                <small className="text-white">Listen on:</small>
+            <section className="relative h-screen">
+                <div className="absolute inset-0">
+                    <div style={{ backgroundImage: "url(/images/home-banner-desktop.webp)" }}
+                        className="hidden md:block h-full bg-cover lg:bg-center md:bg-position-[70%] bg-position-[80%]"
+                    />
 
-                                <div className="flex gap-4 mt-1.5">
-                                    <Link href="">
-                                        <Image className="w-auto" src="/logo/spotify.svg" alt="Spotify"
-                                            width={0} height={40} priority
-                                        />
-                                    </Link>
+                    <div className="block md:hidden h-full w-full bg-cover bg-center"
+                        style={{ backgroundImage: "url(/images/home-banner-mobile.webp)" }}
+                    />
+                </div>
 
-                                    <Link href="">
-                                        <Image className="w-auto" src="/logo/youtube.svg" alt="youtube"
-                                            width={0} height={40} priority
-                                        />
-                                    </Link>
+                <div className='sm:px-10 px-5 h-full'>
+                    <div className="container mx-auto h-full">
+                        <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 items-center gap-6 h-full">
+                            <div className={`h-full flex flex-row justify-start items-end -mt-10 lg:order-0 order-1`}>
+                                <div className="w-max h-max rounded-full bg-white/10 backdrop-blur-[23.4px] px-10 pt-3 pb-4">
+                                    <small className="text-white">Listen on:</small>
+
+                                    <div className="flex gap-4 mt-1.5">
+                                        <Link href="">
+                                            <Image className="w-auto" src="/logo/spotify.svg" alt="Spotify"
+                                                width={0} height={40} priority
+                                            />
+                                        </Link>
+
+                                        <Link href="">
+                                            <Image className="w-auto" src="/logo/youtube.svg" alt="youtube"
+                                                width={0} height={40} priority
+                                            />
+                                        </Link>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <div className={`lg:mt-13 mt-8 flex lg:justify-center justify-end flex-col
-                            lg:order-1 order-0 max-w-150`}
-                        >
-                            <Image id="logo" className='w-max' width={0} height={0}
-                                src='/logo/occams-podcast-footer.svg' alt="Occams Podcast"
-                            />
-
-                            <h1 className={`py-4 text-white heading-1`}>
-                                Inception to Infinity Podcast
-                            </h1>
-
-                            <p className="font-light body-2 text-[#E8E8E8]">
-                                A dialogue for system builders on capital, tech, and governance. Deep dives into reasoning,
-                                structure, and trade-offs, not surface sound bites.
-                            </p>
-
-                            <div className="flex sm:flex-row flex-col gap-5 sm:items-center mt-6">
-                                <BtnComponent btn_title={'Listen Now'} btn_url={'#'} className="py-2 pl-5 pr-2.5"
-                                    image={'/images/listen-now.svg'}
+                            <div className="lg:mt-15 mt-25">
+                                <Image id="logo" className='w-max' width={0} height={0}
+                                    src='/logo/occams-podcast-footer.svg' alt="Occams Podcast"
                                 />
 
-                                <BtnComponent btn_title={'Request a Feature'} bgColor="bg-[#282828]"
-                                    textColor="text-white"
+                                <h1 className={`heading-1 sm:py-3.5 py-2 text-white`}>
+                                    Inception to Infinity Podcast
+                                </h1>
+
+                                <p className="font-light body-2 text-[#E8E8E8]">
+                                    A dialogue for system builders on capital, tech, and governance. Deep dives into
+                                    reasoning, structure, and trade-offs, not surface sound bites.
+                                </p>
+
+                                <BtnComponent btn_title={'Listen Now'} btn_url={'#'} className="mt-6 py-1.5 pl-5 pr-2.5"
+                                    image={'/images/listen-now.svg'}
                                 />
                             </div>
                         </div>
@@ -445,19 +444,54 @@ const Home = () => {
                             </h4>
                         </div>
 
-                        <div className="col-span-12 lg:col-span-8 lg:mt-0 mt-4">
+                        <div className="col-span-12 lg:col-span-8 lg:mt-0 mt-4 lg:max-w-165">
                             <h6 className="subhead-1 text-[#F36B21]">
-                                Inception to Infinity is a long-form podcast for those building and governing systems. We
-                                explore decision mechanics, capital, and organizational design, prioritizing reasoning and
-                                trade-offs over sound bites.
+                                Inception to Infinity is a long-form podcast for those building and governing systems.
+                                We explore decision mechanics, capital, and organizational design, prioritizing reasoning
+                                and trade-offs over sound bites.
 
                                 <span className="text-[#FFFFFF5E]" id="why-we-exist" data-split>
-                                    While modern growth rewards speed, speed rarely rewards clarity. We exist to slow down,
-                                    questioning assumptions and mapping consequences to understand how intention becomes
-                                    structure and structure becomes legacy. We examine the foundations before organizations
-                                    scale.
+                                    While modern growth rewards speed, speed rarely rewards clarity. We exist to slow
+                                    down, questioning assumptions and mapping consequences to understand how intention
+                                    becomes structure and structure becomes legacy. We examine the foundations before
+                                    organizations scale.
                                 </span>
                             </h6>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section className="sm:px-10 px-5">
+                <div className="container mx-auto">
+                    <div className="py-7 overflow-visible sm:overflow-visible md:overflow-visible">
+                        <div className="relative flex md:flex-row flex-col justify-center items-center">
+                            {PODCAST_EXISTS?.map((data, index) => {
+                                const rotation = index === 0 ? "rotate-3" : index === 1 ?
+                                    "-rotate-4" : index === 2 ? "rotate-5" : "-rotate-7"
+
+                                const overlap = index !== 0 ? "md:-ml-40 lg:-ml-30 -mt-20 md:mt-0" : "";
+
+                                return (
+                                    <div key={index} className={`relative cursor-pointer transition-all duration-300 
+                                        ease-in-out will-change-transform hover:z-50 hover:-translate-y-3 active:z-50 
+                                        active:-translate-y-2 ${overlap}`}
+                                    >
+                                        <img src={data?.image} alt={data?.title}
+                                            className="w-75 sm:w-100 h-auto object-contain"
+                                        />
+
+                                        <div className={`absolute inset-0 lg:px-10 px-8 flex flex-col justify-center 
+                                            ${rotation}`}
+                                        >
+                                            <h5 className="heading-5 text-white md:max-w-45 max-w-35">
+                                                {data?.title}
+                                            </h5>
+                                            <p className="md:mt-3 mt-2 body-2 text-white">{data?.desc}</p>
+                                        </div>
+                                    </div>
+                                )
+                            })}
                         </div>
                     </div>
                 </div>
