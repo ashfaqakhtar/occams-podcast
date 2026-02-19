@@ -56,7 +56,7 @@ const Team = () => {
                             </h6>
 
                             <div className="mt-8">
-                                <BtnComponent btn_title={'Reserve your spot'} btn_url={'#'} className="py-2 pl-5 pr-2.5"
+                                <BtnComponent btn_title={'Reserve your spot'} btn_url={'https://calendly.com/occamspodcast/2?back=1&month=2026-02'} className="py-2 pl-5 pr-2.5"
                                     image={'/logo/right-arrow.png'}
                                 />
                             </div>

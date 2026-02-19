@@ -28,7 +28,7 @@ const Navbar = () => {
     };
 
     return (
-        <header className="fixed top-0 left-0 right-0 z-40 w-full py-6 sm:px-10 px-5 rounded-full">
+        <header className="fixed top-0 left-0 right-0 z-999 w-full py-6 sm:px-10 px-5 rounded-full">
             <div className='container mx-auto rounded-full bg-white/10 backdrop-blur-[23.4px] pr-6 sm:pl-8 pl-6 py-2.5'>
                 <div className='flex justify-between w-full items-center'>
                     <Link id="logo-wrapper" href="/" className="inline-block my-auto">
@@ -56,7 +56,7 @@ const Navbar = () => {
                     </div>
 
                     <div className="hidden lg:block">
-                        <BtnComponent btn_title="Request a Feature" btn_url="#" className="py-3.5 px-8" />
+                        <BtnComponent btn_title="Request a Feature" btn_url="https://calendly.com/occamspodcast/2?back=1&month=2026-02" className="py-3.5 px-8" />
                     </div>
 
                     <button className="lg:hidden flex items-center justify-center relative w-10 h-10 cursor-pointer"

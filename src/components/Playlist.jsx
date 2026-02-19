@@ -6,8 +6,8 @@ import BtnComponent from "./BtnComponent";
 import { IoIosArrowBack, IoIosArrowDown, IoIosArrowForward } from "react-icons/io";
 
 const Playlist = ({ mode = "page" }) => {
-    const API_KEY = "AIzaSyCyzvB_9VsSK6KkOnnfJqDVwerLCrzmMLQ";
-    const PLAYLIST_ID = "PL0otti7bMXnhOmIJRafqAPDfrAfGq2MP_";
+    const API_KEY = process.env.NEXT_PUBLIC_YOUTUBE_API_KEY;
+    const PLAYLIST_ID = process.env.NEXT_PUBLIC_YOUTUBE_PLAYLIST_ID;
 
     const [loading, setLoading] = useState(true);
     const [allVideos, setAllVideos] = useState([]);
@@ -270,13 +270,13 @@ const Playlist = ({ mode = "page" }) => {
                                             btn_url={`https://www.youtube.com/watch?v=${data?.videoId}`}
                                         />
 
-                                        <button onClick={() => alert("Transcript: YouTube API se direct")}
+                                        {/* <button onClick={() => alert("Transcript: YouTube API se direct")}
                                             className={`inline-flex flex-nowrap py-1.5 cta-2 text-white bg-[#656565]
                                             w-36 items-center rounded-full justify-center whitespace-nowrap gap-2.5 
                                             cursor-pointer`}
                                         >
                                             Show Transcript
-                                        </button>
+                                        </button> */}
                                     </div>
                                 </div>
                             </div>
