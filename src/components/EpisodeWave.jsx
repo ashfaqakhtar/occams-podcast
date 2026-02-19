@@ -87,7 +87,7 @@ const EpisodeWave = () => {
                 <VoiceBar height={100} backgroundColor="#EA834C" />
             </div>
 
-            <div className='container mx-auto md:hidden flex flex-col items-center justify-center gap-5 md:gap-6 lg:gap-9'>
+            <div className='container mx-auto md:hidden flex flex-col items-center justify-center gap-5'>
                 <div className="flex flex-col items-center justify-center gap-5">
                     <VoiceBarHorizontal width={170} backgroundColor="#EA834C" />
                     <VoiceBarHorizontal width={210} backgroundColor="#F36B21" />

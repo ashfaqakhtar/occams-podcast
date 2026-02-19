@@ -125,8 +125,10 @@ const Highlights = () => {
                 </div>
             </section>
 
-            <section className="linear-background spacing md:hidden flex justify-center items-center relative sm:px-10 px-5">
-                <div className='container mx-auto flex flex-col items-center justify-center gap-5 md:gap-6 lg:gap-9'>
+            <section className={`linear-background spacing md:hidden flex justify-center items-center 
+                relative sm:px-10 px-5`}
+            >
+                <div className='container mx-auto flex flex-col items-center justify-center gap-5'>
                     <VoiceBarHorizontal width={100} backgroundColor="#CD652E" />
                     <VoicePillHorizontal backgroundColor="#FDBD98" label="50+"
                         title="Episodes" className="w-65"

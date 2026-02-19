@@ -56,7 +56,9 @@ const Navbar = () => {
                     </div>
 
                     <div className="hidden lg:block">
-                        <BtnComponent btn_title="Request a Feature" btn_url="https://calendly.com/occamspodcast/2?back=1&month=2026-02" className="py-3.5 px-8" />
+                        <BtnComponent btn_title="Request a Feature" className="py-3.5 px-8"
+                            btn_url="https://calendly.com/occamspodcast/2?back=1&month=2026-02"
+                        />
                     </div>
 
                     <button className="lg:hidden flex items-center justify-center relative w-10 h-10 cursor-pointer"
