@@ -8,75 +8,8 @@ import { BADGES_ITEMS, PODCAST_EXISTS } from "@/utils/staticData";
 import Highlights from "@/components/Highlights";
 import EpisodeWave from "@/components/EpisodeWave";
 import Playlist from "@/components/Playlist";
+import EpisodeCard from "@/components/EpisodeCard";
 
-function EpisodeCard({ item, variant = "side", onClick }) {
-    const isCenter = variant === "center";
-
-    return (
-        <div
-            className={[
-                "col-span-12 sm:col-span-4",
-                isCenter ? "md:col-span-4" : "md:col-span-4",
-            ].join(" ")}
-        >
-            <Link
-                href={item.href}
-                onClick={(e) => {
-                    // if side card clicked, use it as navigation inside carousel
-                    if (!isCenter) {
-                        e.preventDefault();
-                        onClick?.();
-                    }
-                }}
-                className={[
-                    "group relative block overflow-hidden rounded-2xl border border-white/10",
-                    "bg-white/5 shadow-[0_25px_70px_rgba(0,0,0,0.55)]",
-                    isCenter
-                        ? "h-[210px] sm:h-[230px] md:h-[250px]"
-                        : "h-[170px] sm:h-[190px] md:h-[210px] opacity-75 hover:opacity-90",
-                ].join(" ")}
-            >
-                {/* thumbnail */}
-                <div className="absolute inset-0">
-                    <img
-                        src={item.thumb}
-                        alt={item.title}
-                        className={[
-                            "h-full w-full object-cover transition duration-500",
-                            isCenter ? "group-hover:scale-[1.03]" : "scale-[1.02] blur-[0px]",
-                        ].join(" ")}
-                        draggable={false}
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/10 to-black/0" />
-                </div>
-
-                {/* bottom mini controls like screenshot */}
-                <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                        <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-black/55 text-white/80 text-[11px]">
-                            ▶
-                        </span>
-
-                        <span className="text-[11px] text-white/75 line-clamp-1">
-                            {item.title}
-                        </span>
-                    </div>
-
-                    <div className="flex items-center gap-2 text-white/70">
-                        <span className="text-[11px]">⟲</span>
-                        <span className="text-[11px]">⛶</span>
-                        <span className="text-[11px]">🔊</span>
-                    </div>
-                </div>
-
-                {/* subtle highlight border for center */}
-                {isCenter && (
-                    <div className="pointer-events-none absolute inset-0 rounded-2xl ring-1 ring-[#F36B2140]" />
-                )}
-            </Link>
-        </div>
-    );
-}
 const Home = () => {
     useEffect(() => {
         const MID = () => window.innerHeight / 2;
@@ -248,7 +181,6 @@ const Home = () => {
         const dx = clientX - drag.current.x;
         drag.current.down = false;
 
-        // swipe threshold
         if (Math.abs(dx) < 40) return;
         if (dx > 0) prev();
         else next();
@@ -318,109 +250,42 @@ const Home = () => {
 
             <section className="sm:px-10 px-5">
                 <div className="container mx-auto">
-                    <div className="pt-10 pb-12">
-                        <div className="flex items-center justify-between">
-                            <h4 className="text-white/80 text-sm md:text-base font-medium">
-                                Trending Episodes
-                            </h4>
+                    <h4 className="heading-4 spacing text-white">Trending Episodes</h4>
 
-                            <div className="hidden sm:flex items-center gap-2">
-                                <button
-                                    onClick={prev}
-                                    className="h-9 w-9 rounded-full border border-white/10 bg-white/5 text-white/80 hover:bg-white/10"
-                                    aria-label="Previous"
-                                >
-                                    ‹
-                                </button>
-                                <button
-                                    onClick={next}
-                                    className="h-9 w-9 rounded-full border border-white/10 bg-white/5 text-white/80 hover:bg-white/10"
-                                    aria-label="Next"
-                                >
-                                    ›
-                                </button>
-                            </div>
+                    <div ref={trackRef} className="relative select-none" onMouseUp={(e) => onUp(e.clientX)}
+                        onMouseDown={(e) => onDown(e.clientX)} onMouseMove={(e) => onMove(e.clientX)}
+                        onMouseLeave={(e) => onUp(e.clientX)} onTouchStart={(e) => onDown(e.touches[0].clientX)}
+                        onTouchMove={(e) => onMove(e.touches[0].clientX)}
+                        onTouchEnd={(e) => onUp(e.changedTouches[0].clientX)}
+                    >
+                        <div className="grid grid-cols-12 items-center gap-4 md:gap-6">
+                            <EpisodeCard item={items[idxLeft]} variant="side"
+                                onClick={() => setActive(idxLeft)}
+                            />
+
+                            <EpisodeCard item={items[active]} variant="center"
+                                onClick={() => { }}
+                            />
+
+                            <EpisodeCard item={items[idxRight]} variant="side"
+                                onClick={() => setActive(idxRight)}
+                            />
                         </div>
 
-                        {/* Stage */}
-                        <div
-                            ref={trackRef}
-                            className="relative mt-8 select-none"
-                            onMouseDown={(e) => onDown(e.clientX)}
-                            onMouseMove={(e) => onMove(e.clientX)}
-                            onMouseUp={(e) => onUp(e.clientX)}
-                            onMouseLeave={(e) => onUp(e.clientX)}
-                            onTouchStart={(e) => onDown(e.touches[0].clientX)}
-                            onTouchMove={(e) => onMove(e.touches[0].clientX)}
-                            onTouchEnd={(e) => onUp(e.changedTouches[0].clientX)}
-                        >
-                            {/* subtle vignette like screenshot */}
-                            <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-black via-transparent to-black opacity-60" />
+                        <div className="mt-7 flex items-center justify-center gap-2.5">
+                            {items?.map((_, index) => {
+                                const isOn = index === active
 
-                            <div className="grid grid-cols-12 items-center gap-4 md:gap-6">
-                                {/* LEFT */}
-                                <EpisodeCard
-                                    item={items[idxLeft]}
-                                    variant="side"
-                                    onClick={() => setActive(idxLeft)}
-                                />
-
-                                {/* CENTER */}
-                                <EpisodeCard
-                                    item={items[active]}
-                                    variant="center"
-                                    onClick={() => { }}
-                                />
-
-                                {/* RIGHT */}
-                                <EpisodeCard
-                                    item={items[idxRight]}
-                                    variant="side"
-                                    onClick={() => setActive(idxRight)}
-                                />
-                            </div>
-
-                            {/* Mobile controls */}
-                            <div className="mt-4 flex items-center justify-center gap-3 sm:hidden">
-                                <button
-                                    onClick={prev}
-                                    className="h-10 w-10 rounded-full border border-white/10 bg-white/5 text-white/80 hover:bg-white/10"
-                                    aria-label="Previous"
-                                >
-                                    ‹
-                                </button>
-
-                                <button
-                                    onClick={next}
-                                    className="h-10 w-10 rounded-full border border-white/10 bg-white/5 text-white/80 hover:bg-white/10"
-                                    aria-label="Next"
-                                >
-                                    ›
-                                </button>
-                            </div>
-
-                            {/* Dots */}
-                            <div className="mt-3 flex items-center justify-center gap-2">
-                                {items.map((_, i) => {
-                                    const isOn = i === active;
-                                    return (
-                                        <button
-                                            key={i}
-                                            onClick={() => setActive(i)}
-                                            className={[
-                                                "h-1.5 rounded-full transition-all",
-                                                isOn ? "w-7 bg-[#F36B21]" : "w-3 bg-white/25",
-                                            ].join(" ")}
-                                            aria-label={`Go to slide ${i + 1}`}
-                                        />
-                                    );
-                                })}
-                            </div>
+                                return (
+                                    <button key={index} onClick={() => setActive(index)}
+                                        className={`h-1.5 rounded-full transition-all
+                                            ${isOn ? "w-7 h-3 bg-[#F36B21]" : "w-3 h-3 bg-white/20"}
+                                        `}
+                                        aria-label={`Go to slide ${index + 1}`}
+                                    />
+                                );
+                            })}
                         </div>
-
-                        <p className="mt-2 text-center text-xs text-white/35">
-                            Tip: drag/swipe to move • arrows to control
-                        </p>
                     </div>
                 </div>
             </section>
