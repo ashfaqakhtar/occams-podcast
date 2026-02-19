@@ -9,6 +9,7 @@ import Highlights from "@/components/Highlights";
 import EpisodeWave from "@/components/EpisodeWave";
 import Playlist from "@/components/Playlist";
 import EpisodeCard from "@/components/EpisodeCard";
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 
 const Home = () => {
     useEffect(() => {
@@ -104,7 +105,7 @@ const Home = () => {
         };
     }, []);
 
-    const items = useMemo(
+    const itemsStatic = useMemo(
         () => [
             {
                 id: 1,
@@ -145,16 +146,110 @@ const Home = () => {
         []
     );
 
-    const [active, setActive] = useState(1);
+    const API_KEY = process.env.NEXT_PUBLIC_YOUTUBE_API_KEY;
+    const PLAYLIST_ID = process.env.NEXT_PUBLIC_YOUTUBE_PLAYLIST_ID;
+    const [items, setItems] = useState(itemsStatic);
+    const [active, setActive] = useState(0);
+    const [playingVideoId, setPlayingVideoId] = useState("");
+    const [isSliderHovered, setIsSliderHovered] = useState(false);
     const trackRef = useRef(null);
+
+    useEffect(() => {
+        let cancelled = false;
+
+        const fetchTrendingEpisodes = async () => {
+            if (!API_KEY || !PLAYLIST_ID) return;
+
+            try {
+                const res = await fetch(
+                    `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet,contentDetails&maxResults=20&playlistId=${PLAYLIST_ID}&key=${API_KEY}`
+                );
+                if (!res.ok) return;
+
+                const data = await res.json();
+                const mapped = (data?.items || [])
+                    .map((it, index) => {
+                        const sn = it?.snippet || {};
+                        const videoId = it?.contentDetails?.videoId;
+                        const thumb =
+                            sn?.thumbnails?.maxres?.url ||
+                            sn?.thumbnails?.high?.url ||
+                            sn?.thumbnails?.medium?.url ||
+                            sn?.thumbnails?.default?.url ||
+                            "";
+
+                        return {
+                            id: videoId || index + 1,
+                            title: sn?.title || "Untitled Episode",
+                            thumb,
+                            videoId: videoId || "",
+                            href: videoId ? `https://www.youtube.com/watch?v=${videoId}` : "#",
+                        };
+                    })
+                    .filter((item) => {
+                        const t = (item.title || "").toLowerCase();
+                        return (
+                            t !== "private video" &&
+                            t !== "deleted video" &&
+                            Boolean(item.thumb) &&
+                            Boolean(item.videoId)
+                        );
+                    });
+
+                if (!mapped.length || cancelled) return;
+
+                const videoIds = mapped.map((item) => item.videoId).filter(Boolean).slice(0, 50);
+                if (!videoIds.length) return;
+
+                const statsRes = await fetch(
+                    `https://www.googleapis.com/youtube/v3/videos?part=statistics&id=${videoIds.join(",")}&key=${API_KEY}`
+                );
+                if (!statsRes.ok) return;
+
+                const statsData = await statsRes.json();
+                const viewMap = {};
+                (statsData?.items || []).forEach((it) => {
+                    const id = it?.id;
+                    const views = Number(it?.statistics?.viewCount || 0);
+                    if (id) viewMap[id] = views;
+                });
+
+                const topFive = mapped
+                    .map((item) => ({ ...item, views: viewMap[item.videoId] || 0 }))
+                    .sort((a, b) => b.views - a.views)
+                    .slice(0, 5)
+                    .map(({ views, ...rest }) => rest);
+
+                if (!cancelled && topFive.length >= 3) {
+                    setItems(topFive);
+                    setActive(0);
+                    setPlayingVideoId("");
+                }
+            } catch {
+                // Keep fallback episodes if API fails.
+            }
+        };
+
+        fetchTrendingEpisodes();
+
+        return () => {
+            cancelled = true;
+        };
+    }, [API_KEY, PLAYLIST_ID]);
 
     const clampIndex = (i) => {
         const n = items.length;
+        if (!n) return 0;
         return (i + n) % n;
     };
 
-    const prev = () => setActive((p) => clampIndex(p - 1));
-    const next = () => setActive((p) => clampIndex(p + 1));
+    const goToSlide = (index) => {
+        setPlayingVideoId("");
+        setActive(clampIndex(index));
+    };
+
+    const prev = () => goToSlide(active - 1);
+    const next = () => goToSlide(active + 1);
 
     useEffect(() => {
         const onKey = (e) => {
@@ -164,7 +259,17 @@ const Home = () => {
         window.addEventListener("keydown", onKey);
         return () => window.removeEventListener("keydown", onKey);
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [active, items.length]);
+
+    useEffect(() => {
+        if (items.length < 2 || isSliderHovered || Boolean(playingVideoId)) return;
+
+        const intervalId = setInterval(() => {
+            setActive((p) => clampIndex(p + 1));
+        }, 5000);
+
+        return () => clearInterval(intervalId);
+    }, [items.length, isSliderHovered, playingVideoId]);
 
     const drag = useRef({ down: false, x: 0, moved: false });
 
@@ -184,6 +289,15 @@ const Home = () => {
         if (Math.abs(dx) < 40) return;
         if (dx > 0) prev();
         else next();
+    };
+
+    const onTrackMouseEnter = () => {
+        setIsSliderHovered(true);
+    };
+
+    const onTrackMouseLeave = (clientX) => {
+        setIsSliderHovered(false);
+        onUp(clientX);
     };
 
     const idxLeft = clampIndex(active - 1);
@@ -254,22 +368,42 @@ const Home = () => {
 
                     <div ref={trackRef} className="relative select-none" onMouseUp={(e) => onUp(e.clientX)}
                         onMouseDown={(e) => onDown(e.clientX)} onMouseMove={(e) => onMove(e.clientX)}
-                        onMouseLeave={(e) => onUp(e.clientX)} onTouchStart={(e) => onDown(e.touches[0].clientX)}
+                        onMouseEnter={onTrackMouseEnter} onMouseLeave={(e) => onTrackMouseLeave(e.clientX)}
+                        onTouchStart={(e) => onDown(e.touches[0].clientX)}
                         onTouchMove={(e) => onMove(e.touches[0].clientX)}
                         onTouchEnd={(e) => onUp(e.changedTouches[0].clientX)}
                     >
                         <div className="grid grid-cols-12 items-center gap-4 md:gap-6">
                             <EpisodeCard item={items[idxLeft]} variant="side"
-                                onClick={() => setActive(idxLeft)}
+                                onClick={() => goToSlide(idxLeft)}
                             />
 
                             <EpisodeCard item={items[active]} variant="center"
-                                onClick={() => { }}
+                                isPlaying={playingVideoId === items[active]?.videoId}
+                                onPlay={() => setPlayingVideoId(items[active]?.videoId || "")}
                             />
 
                             <EpisodeCard item={items[idxRight]} variant="side"
-                                onClick={() => setActive(idxRight)}
+                                onClick={() => goToSlide(idxRight)}
                             />
+                        </div>
+
+                        <div className="mt-5 flex items-center justify-center gap-3 absolute -top-[25%] right-0">
+                            <button
+                                onClick={prev}
+                                className="h-10 w-10 rounded-full border border-white/20 bg-white/5 text-white hover:bg-white/15 transition flex items-center justify-center cursor-pointer"
+                                aria-label="Previous episode"
+                            >
+                                <IoIosArrowBack />
+                            </button>
+
+                            <button
+                                onClick={next}
+                                className="h-10 w-10 rounded-full border border-white/20 bg-white/5 text-white hover:bg-white/15 transition flex items-center justify-center cursor-pointer"
+                                aria-label="Next episode"
+                            >
+                                <IoIosArrowForward />
+                            </button>
                         </div>
 
                         <div className="mt-7 flex items-center justify-center gap-2.5">
@@ -277,7 +411,7 @@ const Home = () => {
                                 const isOn = index === active
 
                                 return (
-                                    <button key={index} onClick={() => setActive(index)}
+                                    <button key={index} onClick={() => goToSlide(index)}
                                         className={`h-1.5 rounded-full transition-all
                                             ${isOn ? "w-7 h-3 bg-[#F36B21]" : "w-3 h-3 bg-white/20"}
                                         `}
