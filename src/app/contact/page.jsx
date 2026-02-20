@@ -1,7 +1,6 @@
 import React, { Fragment } from 'react'
 import ContactWave from './ContactWave'
 import { CONTACT_DATA } from '@/utils/staticData'
-import Image from 'next/image'
 
 const Contact = () => {
     return (
@@ -47,7 +46,7 @@ const Contact = () => {
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                             {CONTACT_DATA?.map((data, index) => (
                                 <div key={index} className="flex sm:flex-row flex-col items-start gap-4">
-                                    <Image src={data?.image} alt={data?.title} width={0} height={0}
+                                    <img src={data?.image} alt={data?.title}
                                         className="h-auto w-max object-contain mt-1"
                                     />
 
