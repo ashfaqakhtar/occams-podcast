@@ -45,7 +45,7 @@ const Contact = () => {
                     <div className="w-full rounded-xl bg-[#341606] px-4 lg:px-5 py-4">
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                             {CONTACT_DATA?.map((data, index) => (
-                                <div key={index} className="flex sm:flex-row flex-col items-start gap-4">
+                                <div key={index} className="flex sm:flex-row flex-col items-center gap-4">
                                     <img src={data?.image} alt={data?.title}
                                         className="h-auto w-max object-contain mt-1"
                                     />
