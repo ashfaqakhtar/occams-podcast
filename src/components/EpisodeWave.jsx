@@ -72,7 +72,7 @@ const EpisodeWave = () => {
 
                     <div className="mt-6 flex items-center justify-center">
                         <button className={`inline-flex flex-nowrap items-center gap-4 rounded-full cta-1
-                            justify-center whitespace-nowrap bg-[#F36B21] text-white py-3 px-8`}
+                            justify-center whitespace-nowrap bg-[#F36B21] text-white py-3 pl-6 pr-3`}
                         >
                             <span className="whitespace-nowrap">Subscribe Now</span>
                             <img src='/logo/subscribe.svg' alt="Button" className="h-auto w-max shrink-0" />
@@ -117,7 +117,7 @@ const EpisodeWave = () => {
 
                     <div className="mt-6 flex items-center justify-center">
                         <button className={`inline-flex flex-nowrap items-center gap-4 rounded-full cta-1
-                            justify-center whitespace-nowrap bg-[#F36B21] text-white py-3 px-8`}
+                            justify-center whitespace-nowrap bg-[#F36B21] text-white py-3 pl-6 pr-3`}
                         >
                             <span className="whitespace-nowrap">Subscribe Now</span>
                             <img src='/logo/subscribe.svg' alt="Button" className="h-auto w-max shrink-0" />
