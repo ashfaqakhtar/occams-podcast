@@ -32,8 +32,8 @@ const Navbar = () => {
             <div className='container mx-auto rounded-full bg-white/10 backdrop-blur-[23.4px] pr-6 sm:pl-8 pl-6 py-2.5'>
                 <div className='flex justify-between w-full items-center'>
                     <Link id="logo-wrapper" href="/" className="inline-block my-auto">
-                        <Image id="logo" className='w-auto mt-2' width={0} height={0} alt="Occams"
-                            src='/logo/occams-podcast.svg'
+                        <Image id="logo" className='w-max mt-2' width={0} height={0}
+                            src='/logo/occams-podcast-footer.svg' alt="Occams Podcast"
                         />
                     </Link>
 
