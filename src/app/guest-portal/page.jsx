@@ -231,7 +231,8 @@ const GuestPortal = () => {
 
                         <div className="mt-5">
                             <button className={`inline-flex flex-nowrap items-center gap-3 rounded-full cursor-pointer 
-                                cta-1 justify-center whitespace-nowrap bg-white text-[#F36B21] py-2 pl-5 pr-2.5`}
+                                cta-1 justify-center whitespace-nowrap bg-white text-[#F36B21] py-2 pl-5 pr-2.5
+                                hover:-translate-y-0.5 transition-all duration-300 ease-in-out hover:scale-[1.03]`}
                             >
                                 <span className="whitespace-nowrap">Send email</span>
                                 <img src='/logo/email-contact.png' alt="Button" className="h-auto w-max shrink-0" />
