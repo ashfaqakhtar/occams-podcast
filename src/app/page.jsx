@@ -340,8 +340,12 @@ const Home = () => {
                             </div>
 
                             <div className="lg:mt-15 mt-25">
-                                <Image id="logo"className='w-max' width={0} height={0} alt="Occams"
+                                {/* <Image id="logo"className='w-max' width={0} height={0} alt="Occams"
                                     src='/logo/occams-podcast.svg'
+                                /> */}
+
+                                <Image id="logo" className='w-max mt-2' width={0} height={0}
+                                    src='/logo/occams-podcast-footer.svg' alt="Occams Podcast"
                                 />
 
                                 <h1 className={`heading-1 sm:py-3.5 py-2 text-white`}>

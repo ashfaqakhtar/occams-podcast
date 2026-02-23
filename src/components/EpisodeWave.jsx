@@ -130,8 +130,9 @@ const EpisodeWave = () => {
 
                     <form onSubmit={handleNewsletterSubmit} className="mt-6 w-full max-w-100 mx-auto">
                         <div className="relative">
-                            <input name="email" type="email" required placeholder="Enter your email address" className={`w-full rounded-full 
-                                border border-[#FFFFFF5E] px-6 pr-12 py-4 body-2 text-[#E8E8E8] outline-none`}
+                            <input name="email" type="email" required placeholder="Enter your email address" className={`
+                                w-full rounded-full border border-[#FFFFFF5E] px-6 pr-12 py-4 body-2 text-[#E8E8E8] 
+                                outline-none`}
                             />
 
                             <span className={`absolute right-6 top-1/2 -translate-y-1/2 flex h-8 w-8 items-center 
@@ -142,8 +143,10 @@ const EpisodeWave = () => {
                         </div>
 
                         <div className="mt-6 flex items-center justify-center">
-                            <button type="submit" disabled={isSubmitting} className={`inline-flex flex-nowrap items-center gap-4 rounded-full cta-1
-                                justify-center whitespace-nowrap bg-[#F36B21] text-white py-3 pl-6 pr-3 disabled:opacity-60`}
+                            <button type="submit" disabled={isSubmitting} className={`inline-flex flex-nowrap items-center 
+                                gap-4 rounded-full cta-1 justify-center whitespace-nowrap bg-[#F36B21] text-white 
+                                py-3 pl-6 pr-3 disabled:opacity-60 hover:-translate-y-0.5 transition-all duration-300 
+                                ease-in-out hover:scale-[1.03] cursor-pointer`}
                             >
                                 <span className="whitespace-nowrap">{isSubmitting ? "Submitting..." : "Subscribe Now"}</span>
                                 <img src='/logo/subscribe.svg' alt="Button" className="h-auto w-max shrink-0" />
@@ -177,8 +180,8 @@ const EpisodeWave = () => {
 
                     <form onSubmit={handleNewsletterSubmit} className="mt-6 w-full max-w-100 mx-auto">
                         <div className="relative">
-                            <input name="email" type="email" required placeholder="Enter your Email-Id" className={`w-full rounded-full 
-                                border border-[#FFFFFF5E] px-6 pr-12 py-4 body-2 text-[#E8E8E8] outline-none`}
+                            <input name="email" type="email" required placeholder="Enter your Email-Id" className={`w-full 
+                                rounded-full border border-[#FFFFFF5E] px-6 pr-12 py-4 body-2 text-[#E8E8E8] outline-none`}
                             />
 
                             <span className={`absolute right-6 top-1/2 -translate-y-1/2 flex h-8 w-8 items-center 
@@ -189,8 +192,10 @@ const EpisodeWave = () => {
                         </div>
 
                         <div className="mt-6 flex items-center justify-center">
-                            <button type="submit" disabled={isSubmitting} className={`inline-flex flex-nowrap items-center gap-4 rounded-full cta-1
-                                justify-center whitespace-nowrap bg-[#F36B21] text-white py-3 pl-6 pr-3 disabled:opacity-60`}
+                            <button type="submit" disabled={isSubmitting} className={`inline-flex flex-nowrap items-center 
+                                gap-4 rounded-full cta-1 justify-center whitespace-nowrap bg-[#F36B21] text-white 
+                                py-3 pl-6 pr-3 disabled:opacity-60 transition-all duration-300 ease-in-out hover:scale-[1.03]
+                                hover:-translate-y-0.5 cursor-pointer`}
                             >
                                 <span className="whitespace-nowrap">{isSubmitting ? "Submitting..." : "Subscribe Now"}</span>
                                 <img src='/logo/subscribe.svg' alt="Button" className="h-auto w-max shrink-0" />
@@ -205,7 +210,6 @@ const EpisodeWave = () => {
                     <VoiceBarHorizontal width={170} backgroundColor="#E9A986" />
                 </div>
             </div>
-
         </section>
     )
 }

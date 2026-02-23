@@ -133,10 +133,10 @@ const ContactWave = () => {
                     <VoiceBar height={380} backgroundColor="#EA834C" />
                     <VoiceBar height={290} backgroundColor="#F36B21" />
 
-                    <form onSubmit={handleContactSubmit} className="w-172 flex flex-col justify-evenly bg-[#341606] p-8 rounded-2xl">
-                        <h5 className="heading-5 text-white">
-                            Send a Message
-                        </h5>
+                    <form className="w-172 flex flex-col justify-evenly bg-[#341606] p-8 rounded-2xl"
+                        onSubmit={handleContactSubmit}
+                    >
+                        <h5 className="heading-5 text-white">Send a Message</h5>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mt-5">
                             <div>
@@ -185,8 +185,10 @@ const ContactWave = () => {
                         </div>
 
                         <div className="mt-6 flex flex-col gap-3">
-                            <button type="submit" disabled={isSubmitting} className={`inline-flex flex-nowrap items-center gap-3 rounded-full cursor-pointer 
-                                cta-1 justify-center whitespace-nowrap bg-white text-[#F36B21] py-2 pl-5 pr-2.5 disabled:opacity-60`}
+                            <button type="submit" disabled={isSubmitting} className={`inline-flex flex-nowrap items-center 
+                                gap-3 rounded-full cursor-pointer cta-1 justify-center whitespace-nowrap bg-white 
+                                py-2 pl-5 pr-2.5 text-[#F36B21] disabled:opacity-60 hover:-translate-y-0.5 transition-all 
+                                duration-300 ease-in-out hover:scale-[1.03] w-max`}
                             >
                                 <span className="whitespace-nowrap">{isSubmitting ? "Sending..." : "Send Message"}</span>
                                 <img src='/logo/email-contact.png' alt="Button" className="h-auto w-max shrink-0" />
@@ -207,10 +209,10 @@ const ContactWave = () => {
                         <VoiceBarHorizontal width={260} backgroundColor="#E9A986" />
                     </div>
 
-                    <form onSubmit={handleContactSubmit} className="w-full flex flex-col justify-evenly bg-[#341606] p-5 rounded-2xl">
-                        <h5 className="heading-5 text-white">
-                            Send a Message
-                        </h5>
+                    <form className="w-full flex flex-col justify-evenly bg-[#341606] p-5 rounded-2xl"
+                        onSubmit={handleContactSubmit}
+                    >
+                        <h5 className="heading-5 text-white">Send a Message</h5>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mt-5">
                             <div>
@@ -259,8 +261,10 @@ const ContactWave = () => {
                         </div>
 
                         <div className="mt-6 flex flex-col gap-3">
-                            <button type="submit" disabled={isSubmitting} className={`inline-flex flex-nowrap items-center gap-3 rounded-full cursor-pointer
-                                cta-1 justify-center whitespace-nowrap bg-white text-[#F36B21] py-2 pl-5 pr-2.5 disabled:opacity-60`}
+                            <button type="submit" disabled={isSubmitting} className={`inline-flex flex-nowrap items-center 
+                                gap-3 rounded-full cursor-pointer cta-1 justify-center whitespace-nowrap bg-white 
+                                py-2 pl-5 pr-2.5 text-[#F36B21] disabled:opacity-60 hover:-translate-y-0.5 transition-all 
+                                duration-300 ease-in-out hover:scale-[1.03] w-max`}
                             >
                                 <span className="whitespace-nowrap">{isSubmitting ? "Sending..." : "Send Message"}</span>
                                 <img src='/logo/email-contact.png' alt="Button" className="h-auto w-max shrink-0" />
