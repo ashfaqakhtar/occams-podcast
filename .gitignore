@@ -20,6 +20,7 @@
 # production
 /build
 .htaccess
+/mail
 
 # misc
 .DS_Store

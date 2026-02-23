@@ -1,7 +1,10 @@
 "use client";
 
 import { motion, useMotionValue, animate } from "framer-motion";
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment, useEffect, useState } from "react";
+import Swal from "sweetalert2";
+
+const MAIL_ENDPOINT = process.env.NEXT_PUBLIC_MAIL_ENDPOINT || "/mail/endpoint.php";
 
 function VoiceBar({ height, backgroundColor, className = "", speed = 500 }) {
     const scale = useMotionValue(1);
@@ -43,6 +46,77 @@ function VoiceBarHorizontal({ width, backgroundColor, speed = 500, className = "
 }
 
 const ContactWave = () => {
+    const [isSubmitting, setIsSubmitting] = useState(false);
+
+    const handleContactSubmit = async (event) => {
+        event.preventDefault();
+        const form = event.currentTarget;
+        const formData = new FormData(form);
+
+        const payload = {
+            form: "contact",
+            first_name: (formData.get("first_name") || "").toString().trim(),
+            email: (formData.get("email") || "").toString().trim(),
+            subject: (formData.get("subject") || "").toString().trim(),
+            message: (formData.get("message") || "").toString().trim(),
+        };
+
+        if (!payload.first_name || !payload.email || !payload.subject || !payload.message) {
+            Swal.fire({
+                icon: "error",
+                title: "Missing fields",
+                text: "All fields are required.",
+                confirmButtonColor: "#F36B21",
+            });
+            return;
+        }
+
+        setIsSubmitting(true);
+
+        try {
+            const response = await fetch(MAIL_ENDPOINT, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload),
+            });
+
+            const contentType = response.headers.get("content-type") || "";
+            let data;
+
+            if (contentType.includes("application/json")) {
+                data = await response.json();
+            } else {
+                const raw = await response.text();
+                throw new Error(
+                    raw.includes("<!DOCTYPE") || raw.includes("<html")
+                        ? "Mail endpoint returned HTML. Check NEXT_PUBLIC_MAIL_ENDPOINT and PHP server."
+                        : (raw || "Unexpected non-JSON response from mail endpoint.")
+                );
+            }
+
+            if (!response.ok || !data.success) {
+                throw new Error(data?.message || "Failed to send message.");
+            }
+
+            form.reset();
+            Swal.fire({
+                icon: "success",
+                title: "Sent",
+                text: data.message || "Message sent successfully.",
+                confirmButtonColor: "#F36B21",
+            });
+        } catch (error) {
+            Swal.fire({
+                icon: "error",
+                title: "Submit failed",
+                text: error.message || "Something went wrong.",
+                confirmButtonColor: "#F36B21",
+            });
+        } finally {
+            setIsSubmitting(false);
+        }
+    };
+
     return (
         <Fragment>
             <section className="sm:px-10 px-5">
@@ -59,7 +133,7 @@ const ContactWave = () => {
                     <VoiceBar height={380} backgroundColor="#EA834C" />
                     <VoiceBar height={290} backgroundColor="#F36B21" />
 
-                    <div className="w-172 flex flex-col justify-evenly bg-[#341606] p-8 rounded-2xl">
+                    <form onSubmit={handleContactSubmit} className="w-172 flex flex-col justify-evenly bg-[#341606] p-8 rounded-2xl">
                         <h5 className="heading-5 text-white">
                             Send a Message
                         </h5>
@@ -110,15 +184,15 @@ const ContactWave = () => {
                                 duration-200`}></textarea>
                         </div>
 
-                        <div className="mt-6 flex">
-                            <button className={`inline-flex flex-nowrap items-center gap-3 rounded-full cursor-pointer 
-                                cta-1 justify-center whitespace-nowrap bg-white text-[#F36B21] py-2 pl-5 pr-2.5`}
+                        <div className="mt-6 flex flex-col gap-3">
+                            <button type="submit" disabled={isSubmitting} className={`inline-flex flex-nowrap items-center gap-3 rounded-full cursor-pointer 
+                                cta-1 justify-center whitespace-nowrap bg-white text-[#F36B21] py-2 pl-5 pr-2.5 disabled:opacity-60`}
                             >
-                                <span className="whitespace-nowrap">Send Message</span>
+                                <span className="whitespace-nowrap">{isSubmitting ? "Sending..." : "Send Message"}</span>
                                 <img src='/logo/email-contact.png' alt="Button" className="h-auto w-max shrink-0" />
                             </button>
                         </div>
-                    </div>
+                    </form>
 
                     <VoiceBar height={290} backgroundColor="#EA834C" />
                     <VoiceBar height={380} backgroundColor="#F36B21" />
@@ -133,7 +207,7 @@ const ContactWave = () => {
                         <VoiceBarHorizontal width={260} backgroundColor="#E9A986" />
                     </div>
 
-                    <div className="w-full flex flex-col justify-evenly bg-[#341606] p-5 rounded-2xl">
+                    <form onSubmit={handleContactSubmit} className="w-full flex flex-col justify-evenly bg-[#341606] p-5 rounded-2xl">
                         <h5 className="heading-5 text-white">
                             Send a Message
                         </h5>
@@ -184,15 +258,15 @@ const ContactWave = () => {
                                 duration-200`}></textarea>
                         </div>
 
-                        <div className="mt-6 flex">
-                            <button className={`inline-flex flex-nowrap items-center gap-3 rounded-full cursor-pointer
-                                cta-1 justify-center whitespace-nowrap bg-white text-[#F36B21] py-2 pl-5 pr-2.5`}
+                        <div className="mt-6 flex flex-col gap-3">
+                            <button type="submit" disabled={isSubmitting} className={`inline-flex flex-nowrap items-center gap-3 rounded-full cursor-pointer
+                                cta-1 justify-center whitespace-nowrap bg-white text-[#F36B21] py-2 pl-5 pr-2.5 disabled:opacity-60`}
                             >
-                                <span className="whitespace-nowrap">Send Message</span>
+                                <span className="whitespace-nowrap">{isSubmitting ? "Sending..." : "Send Message"}</span>
                                 <img src='/logo/email-contact.png' alt="Button" className="h-auto w-max shrink-0" />
                             </button>
                         </div>
-                    </div>
+                    </form>
 
                     <div className="flex flex-col items-center justify-center gap-5">
                         <VoiceBarHorizontal width={260} backgroundColor="#EA834C" />
