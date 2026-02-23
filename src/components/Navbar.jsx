@@ -31,14 +31,14 @@ const Navbar = () => {
         <header className="fixed top-0 left-0 right-0 z-999 w-full py-6 sm:px-10 px-5 rounded-full">
             <div className='container mx-auto rounded-full bg-white/10 backdrop-blur-[23.4px] pr-6 sm:pl-8 pl-6 py-2.5'>
                 <div className='flex justify-between w-full items-center'>
-                    <Link id="logo-wrapper" href="/" className="inline-block my-auto">
+                    <Link id="logo-wrapper" href="/" prefetch={false} className="inline-block my-auto">
                         <Image id="logo" className='w-max mt-2' width={0} height={0}
                             src='/logo/occams-podcast-footer.svg' alt="Occams Podcast"
                         />
                     </Link>
 
                     <div className="lg:flex items-center xl:gap-8 md:gap-6 gap-8 caption-1 hidden h-18 pr-9 text-white">
-                        <Link href="/">
+                        <Link href="/" prefetch={false}>
                             <svg xmlns="http://www.w3.org/2000/svg" width="17" height="16" viewBox="0 0 17 16"
                                 fill="currentColor" className={isActive("/") ? "text-[#F16A21]" : "text-white"}
                             >
@@ -47,7 +47,7 @@ const Navbar = () => {
                         </Link>
 
                         {NAV_ITEMS?.filter((menu) => menu.href !== "/").map((item) => (
-                            <Link key={item?.href} href={item?.href}
+                            <Link key={item?.href} href={item?.href} prefetch={false}
                                 className={isActive(item?.href) ? "text-[#F16A21]" : "text-white"}
                             >
                                 {item?.label}
@@ -82,7 +82,7 @@ const Navbar = () => {
                 >
                     <div className='container mx-auto'>
                         <div className="flex items-start justify-between">
-                            <Link id="logo-wrapper" href="/" className="inline-block my-auto">
+                            <Link id="logo-wrapper" href="/" prefetch={false} className="inline-block my-auto">
                                 <Image id="logo" className='w-auto' width={0} height={0} alt="Occams"
                                     src='/logo/occams-podcast.svg'
                                 />
@@ -104,7 +104,7 @@ const Navbar = () => {
                                 const active = isActive(item?.href);
 
                                 return (
-                                    <Link key={item?.href} href={item?.href} onClick={closeMenu} className={`flex pl-8
+                                    <Link key={item?.href} href={item?.href} prefetch={false} onClick={closeMenu} className={`flex pl-8
                                         items-center justify-between rounded-xl transition-colors
                                         ${active ? "bg-[#332E2E] py-3 pr-12" : ""}`}
                                     >
