@@ -145,8 +145,7 @@ const EpisodeWave = () => {
                         <div className="mt-6 flex items-center justify-center">
                             <button type="submit" disabled={isSubmitting} className={`inline-flex flex-nowrap items-center 
                                 gap-4 rounded-full cta-1 justify-center whitespace-nowrap bg-[#F36B21] text-white 
-                                py-3 pl-6 pr-3 disabled:opacity-60 hover:-translate-y-0.5 transition-all duration-300 
-                                ease-in-out hover:scale-[1.03] cursor-pointer`}
+                                py-3 pl-6 pr-3 disabled:opacity-60 btn-professional cursor-pointer`}
                             >
                                 <span className="whitespace-nowrap">{isSubmitting ? "Submitting..." : "Subscribe Now"}</span>
                                 <img src='/logo/subscribe.svg' alt="Button" className="h-auto w-max shrink-0" />
@@ -194,8 +193,7 @@ const EpisodeWave = () => {
                         <div className="mt-6 flex items-center justify-center">
                             <button type="submit" disabled={isSubmitting} className={`inline-flex flex-nowrap items-center 
                                 gap-4 rounded-full cta-1 justify-center whitespace-nowrap bg-[#F36B21] text-white 
-                                py-3 pl-6 pr-3 disabled:opacity-60 transition-all duration-300 ease-in-out hover:scale-[1.03]
-                                hover:-translate-y-0.5 cursor-pointer`}
+                                py-3 pl-6 pr-3 disabled:opacity-60 btn-professional cursor-pointer`}
                             >
                                 <span className="whitespace-nowrap">{isSubmitting ? "Submitting..." : "Subscribe Now"}</span>
                                 <img src='/logo/subscribe.svg' alt="Button" className="h-auto w-max shrink-0" />

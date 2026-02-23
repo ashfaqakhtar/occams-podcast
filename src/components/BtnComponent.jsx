@@ -7,8 +7,7 @@ const BtnComponent = ({ btn_title, btn_url = "#", bgColor = "bg-white", image,
     return (
         <div>
             <Link href={btn_url} target="_blank" className={`group inline-flex flex-nowrap items-center rounded-full
-                justify-center whitespace-nowrap gap-2.5 transition-all duration-300 ease-in-out hover:scale-[1.03]
-                hover:-translate-y-0.5 ${bgColor} ${textColor} ${className}`}
+                justify-center whitespace-nowrap gap-2.5 btn-professional ${bgColor} ${textColor} ${className}`}
             >
                 <span className="whitespace-nowrap">{btn_title}</span>
                 {image && (

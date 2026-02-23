@@ -187,8 +187,7 @@ const ContactWave = () => {
                         <div className="mt-6 flex flex-col gap-3">
                             <button type="submit" disabled={isSubmitting} className={`inline-flex flex-nowrap items-center 
                                 gap-3 rounded-full cursor-pointer cta-1 justify-center whitespace-nowrap bg-white 
-                                py-2 pl-5 pr-2.5 text-[#F36B21] disabled:opacity-60 hover:-translate-y-0.5 transition-all 
-                                duration-300 ease-in-out hover:scale-[1.03] w-max`}
+                                py-2 pl-5 pr-2.5 text-[#F36B21] disabled:opacity-60 btn-professional w-max`}
                             >
                                 <span className="whitespace-nowrap">{isSubmitting ? "Sending..." : "Send Message"}</span>
                                 <img src='/logo/email-contact.png' alt="Button" className="h-auto w-max shrink-0" />
@@ -263,8 +262,7 @@ const ContactWave = () => {
                         <div className="mt-6 flex flex-col gap-3">
                             <button type="submit" disabled={isSubmitting} className={`inline-flex flex-nowrap items-center 
                                 gap-3 rounded-full cursor-pointer cta-1 justify-center whitespace-nowrap bg-white 
-                                py-2 pl-5 pr-2.5 text-[#F36B21] disabled:opacity-60 hover:-translate-y-0.5 transition-all 
-                                duration-300 ease-in-out hover:scale-[1.03] w-max`}
+                                py-2 pl-5 pr-2.5 text-[#F36B21] disabled:opacity-60 btn-professional w-max`}
                             >
                                 <span className="whitespace-nowrap">{isSubmitting ? "Sending..." : "Send Message"}</span>
                                 <img src='/logo/email-contact.png' alt="Button" className="h-auto w-max shrink-0" />

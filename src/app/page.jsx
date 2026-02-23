@@ -324,13 +324,13 @@ const Home = () => {
                                     <small className="text-white">Listen on:</small>
 
                                     <div className="flex gap-4 mt-1.5">
-                                        <Link href="">
+                                        <Link href="https://open.spotify.com/show/1FCHwR8dWex7l8jHjFqKou?si=0dbe85ff6bdb471b" target="_blank">
                                             <Image className="w-auto" src="/logo/spotify.svg" alt="Spotify"
                                                 width={0} height={40} priority
                                             />
                                         </Link>
 
-                                        <Link href="">
+                                        <Link href="https://youtube.com/@occams_advisory?si=OZVBc-R1Ch04GIT1" target="_blank">
                                             <Image className="w-auto" src="/logo/youtube.svg" alt="youtube"
                                                 width={0} height={40} priority
                                             />
@@ -569,7 +569,7 @@ const Home = () => {
 
                     <div className="mt-10 hidden lg:flex flex-wrap items-center justify-center gap-4">
                         {BADGES_ITEMS?.map((item, index) => (
-                            <Link key={index} href={item?.href} className={`group inline-flex items-center gap-3
+                            <Link target="_blank" key={index} href={item?.href} className={`group inline-flex items-center gap-3
                                 transition hover:-translate-y-px`}
                             >
                                 <img src={item?.image} alt={item?.name} className="w-max h-auto" />

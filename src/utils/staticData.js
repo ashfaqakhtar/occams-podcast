@@ -7,26 +7,26 @@ export const NAV_ITEMS = [
 ];
 
 export const BADGES_ITEMS = [
+    // {
+    //     href: "#",
+    //     name: "Apple Podcasts",
+    //     image: "/images/apple-podcast.png",
+    //     mobile_image: "/images/sm-apple-podcast.png",
+    // },
     {
-        href: "#",
-        name: "Apple Podcasts",
-        image: "/images/apple-podcast.png",
-        mobile_image: "/images/sm-apple-podcast.png",
-    },
-    {
-        href: "#",
+        href: "https://open.spotify.com/show/1FCHwR8dWex7l8jHjFqKou?si=0dbe85ff6bdb471b",
         name: "Spotify Podcasts",
         image: "/images/spotify-podcast.png",
         mobile_image: "/images/sm-spotify-podcast.png",
     },
+    // {
+    //     href: "#",
+    //     name: "Google Podcasts",
+    //     image: "/images/google-podcast.png",
+    //     mobile_image: "/images/sm-google-podcast.png",
+    // },
     {
-        href: "#",
-        name: "Google Podcasts",
-        image: "/images/google-podcast.png",
-        mobile_image: "/images/sm-google-podcast.png",
-    },
-    {
-        href: "#",
+        href: "https://youtube.com/@occams_advisory?si=OZVBc-R1Ch04GIT1",
         name: "YouTube",
         image: "/images/you-tube.png",
         mobile_image: "/images/sm-you-tube.png",

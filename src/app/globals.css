@@ -162,6 +162,43 @@ html.lenis body {
     background: linear-gradient(82deg, #2A180E 56.85%, #F36B21 100%);
 }
 
+.btn-professional {
+    position: relative;
+    overflow: hidden;
+    transform: translateY(0);
+    transition: transform 260ms ease, box-shadow 260ms ease, filter 260ms ease;
+}
+
+.btn-professional::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(110deg, transparent 20%, rgba(255, 255, 255, 0.3) 50%, transparent 80%);
+    transform: translateX(-130%);
+    transition: transform 420ms ease;
+    pointer-events: none;
+}
+
+.btn-professional:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.02);
+    box-shadow: 0 10px 24px rgba(243, 107, 33, 0.3);
+}
+
+.btn-professional:hover::after {
+    transform: translateX(130%);
+}
+
+.btn-professional:active {
+    transform: translateY(0);
+    box-shadow: 0 6px 14px rgba(243, 107, 33, 0.22);
+}
+
+.btn-professional:focus-visible {
+    outline: 2px solid #F36B21;
+    outline-offset: 2px;
+}
+
 ::-webkit-scrollbar {
     width: 10px;
 }
