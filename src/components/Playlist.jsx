@@ -5,7 +5,7 @@ import { Fragment, useEffect, useMemo, useState } from "react";
 import BtnComponent from "./BtnComponent";
 import { IoIosArrowBack, IoIosArrowDown, IoIosArrowForward } from "react-icons/io";
 
-const Playlist = ({ mode = "page" }) => {
+const Playlist = ({ mode = "page", searchTerm = "" }) => {
     const API_KEY = process.env.NEXT_PUBLIC_YOUTUBE_API_KEY;
     const PLAYLIST_ID = process.env.NEXT_PUBLIC_YOUTUBE_PLAYLIST_ID;
 
@@ -148,19 +148,46 @@ const Playlist = ({ mode = "page" }) => {
         };
     }, [http, API_KEY, PLAYLIST_ID, isHome]);
 
+    const filteredVideos = useMemo(() => {
+        const query = searchTerm.trim().toLowerCase();
+
+        if (!query) return allVideos;
+
+        return allVideos.filter((video) => {
+            const title = video?.title?.toLowerCase() || "";
+            // const desc = video?.desc?.toLowerCase() || "";
+            return title.includes(query);
+        });
+    }, [allVideos, searchTerm]);
+
+
     const totalPages = useMemo(() => {
-        return Math.max(1, Math.ceil(allVideos.length / perPage));
-    }, [allVideos.length, perPage]);
+        return Math.max(1, Math.ceil(filteredVideos.length / perPage));
+    }, [filteredVideos.length, perPage]);
+
+    // const totalPages = useMemo(() => {
+    //     return Math.max(1, Math.ceil(allVideos.length / perPage));
+    // }, [allVideos.length, perPage]);
 
     useEffect(() => {
         if (!isHome) setPage(1);
     }, [perPage, isHome]);
 
+    useEffect(() => {
+        setPage(1);
+    }, [searchTerm]);
+
+    // const pageVideos = useMemo(() => {
+    //     if (isHome) return allVideos.slice(0, 3);
+    //     const start = (page - 1) * perPage;
+    //     return allVideos.slice(start, start + perPage);
+    // }, [allVideos, page, perPage, isHome]);
+
     const pageVideos = useMemo(() => {
-        if (isHome) return allVideos.slice(0, 3);
+        if (isHome) return filteredVideos.slice(0, 3);
         const start = (page - 1) * perPage;
-        return allVideos.slice(start, start + perPage);
-    }, [allVideos, page, perPage, isHome]);
+        return filteredVideos.slice(start, start + perPage);
+    }, [filteredVideos, page, perPage, isHome]);
 
     useEffect(() => {
         if (!pageVideos.length) return;
@@ -285,7 +312,7 @@ const Playlist = ({ mode = "page" }) => {
                 })}
             </div>
 
-            {!isHome && !error && (
+            {!isHome && !error && filteredVideos.length > 0  && (
                 <Fragment>
                     <div className="sm:mt-10 mt-7 flex items-center justify-between gap-7 sm:flex-row">
                         <div className="relative w-fit">
@@ -305,7 +332,7 @@ const Playlist = ({ mode = "page" }) => {
                         </div>
 
                         <div className="md:flex hidden caption-1 text-white text-center">
-                            {page} - {totalPages} of {allVideos.length}
+                            {page} - {totalPages} of {filteredVideos.length}
                         </div>
 
                         <div className="flex items-center md:gap-3.5 gap-2">
@@ -349,7 +376,7 @@ const Playlist = ({ mode = "page" }) => {
                     </div>
 
                     <div className="flex md:hidden sm:mt-10 mt-7 caption-1 text-white text-center">
-                        {page} - {totalPages} of {allVideos.length}
+                        {page} - {totalPages} of {filteredVideos.length}
                     </div>
                 </Fragment>
             )}
