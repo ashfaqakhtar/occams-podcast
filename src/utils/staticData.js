@@ -2,7 +2,7 @@ export const NAV_ITEMS = [
     { href: "/", label: "Home" },
     { href: "/episodes", label: "Episodes" },
     { href: "/guest-portal", label: "Guest Portal" },
-    { href: "/team", label: "Team" },
+    // { href: "/team", label: "Team" },
     { href: "/contact", label: "Contact" },
 ];
 

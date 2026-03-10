@@ -155,7 +155,7 @@ html.lenis body {
 }
 
 .linear-background {
-    background: linear-gradient(90deg, #F36B21 0%, #f36b2100 100%);
+    background: linear-gradient(80deg, #f36b21 0%, #f36b2100 50%)
 }
 
 .linear-background-secondary {

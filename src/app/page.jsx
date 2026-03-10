@@ -2,306 +2,15 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { Fragment, useEffect, useMemo, useRef, useState } from "react";
+import { Fragment } from "react";
 import BtnComponent from "@/components/BtnComponent";
 import { BADGES_ITEMS, PODCAST_EXISTS } from "@/utils/staticData";
 import Highlights from "@/components/Highlights";
 import EpisodeWave from "@/components/EpisodeWave";
 import Playlist from "@/components/Playlist";
-import EpisodeCard from "@/components/EpisodeCard";
-import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
+import TeamWave from "./team/TeamWave";
 
 const Home = () => {
-    useEffect(() => {
-        const MID = () => window.innerHeight / 2;
-        const nodes = Array.from(document.querySelectorAll("[data-split]"));
-
-        nodes.forEach((node) => {
-            const text = node.textContent || "";
-            node.textContent = "";
-
-            const frag = document.createDocumentFragment();
-            const charSpans = [];
-
-            for (let i = 0; i < text.length; i++) {
-                const ch = text[i];
-
-                if (ch === " ") {
-                    frag.appendChild(document.createTextNode(" "));
-                    continue;
-                }
-
-                const span = document.createElement("span");
-                span.className = "subhead-2 text-[#FFFFFF59] char";
-                span.textContent = ch;
-
-                charSpans.push(span);
-                frag.appendChild(span);
-            }
-
-            node.appendChild(frag);
-            node._chars = charSpans;
-            node._activeCount = 0;
-        });
-
-        const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
-
-        function update() {
-            const mid = MID();
-
-            nodes.forEach((node) => {
-                const rect = node.getBoundingClientRect();
-                const chars = node._chars || [];
-                if (!chars.length) return;
-
-                const progress = clamp((mid - rect.top) / Math.max(rect.height, 1), 0, 1);
-                const target = Math.floor(progress * chars.length);
-
-                if (target === node._activeCount) return;
-
-                if (target > node._activeCount) {
-                    for (let i = node._activeCount; i < target; i++) {
-                        const s = chars[i];
-                        if (!s) continue;
-                        s.classList.remove("subhead-2", "text-[#FFFFFF59]");
-                        s.classList.add("subhead-1", "text-[#F36B21]");
-                    }
-                } else {
-                    for (let i = target; i < node._activeCount; i++) {
-                        const s = chars[i];
-                        if (!s) continue;
-                        s.classList.add("subhead-2", "text-[#FFFFFF59]");
-                        s.classList.remove("subhead-1", "text-[#F36B21]");
-                    }
-                }
-
-                node._activeCount = target;
-            });
-        }
-
-        const style = document.createElement("style");
-        style.textContent = `.char { transition: color .18s ease-out; }`;
-        document.head.appendChild(style);
-
-        update();
-        let ticking = false;
-        const onScroll = () => {
-            if (!ticking) {
-                requestAnimationFrame(() => {
-                    update();
-                    ticking = false;
-                });
-                ticking = true;
-            }
-        };
-
-        window.addEventListener("scroll", onScroll, { passive: true });
-        window.addEventListener("resize", update);
-
-        return () => {
-            window.removeEventListener("scroll", onScroll);
-            window.removeEventListener("resize", update);
-            style.remove();
-        };
-    }, []);
-
-    const itemsStatic = useMemo(
-        () => [
-            {
-                id: 1,
-                title: "Episode 12 — Scaling Systems",
-                thumb:
-                    "https://images.unsplash.com/photo-1525182008055-f88b95ff7980?auto=format&fit=crop&w=1400&q=80",
-                href: "#",
-            },
-            {
-                id: 2,
-                title: "Episode 13 — Markets & Decisions",
-                thumb:
-                    "https://images.unsplash.com/photo-1516280440614-37939bbacd81?auto=format&fit=crop&w=1400&q=80",
-                href: "#",
-            },
-            {
-                id: 3,
-                title: "Episode 14 — Leadership Under Uncertainty",
-                thumb:
-                    "https://images.unsplash.com/photo-1511379938547-c1f69419868d?auto=format&fit=crop&w=1400&q=80",
-                href: "#",
-            },
-            {
-                id: 4,
-                title: "Episode 15 — Strategy & Clarity",
-                thumb:
-                    "https://images.unsplash.com/photo-1520523839897-bd0b52f945a0?auto=format&fit=crop&w=1400&q=80",
-                href: "#",
-            },
-            {
-                id: 5,
-                title: "Episode 16 — Building for the Long Term",
-                thumb:
-                    "https://images.unsplash.com/photo-1520975916090-3105956dac38?auto=format&fit=crop&w=1400&q=80",
-                href: "#",
-            },
-        ],
-        []
-    );
-
-    const API_KEY = process.env.NEXT_PUBLIC_YOUTUBE_API_KEY;
-    const PLAYLIST_ID = process.env.NEXT_PUBLIC_YOUTUBE_PLAYLIST_ID;
-    const [items, setItems] = useState([]);
-    const [active, setActive] = useState(0);
-    const [playingVideoId, setPlayingVideoId] = useState("");
-    const [isSliderHovered, setIsSliderHovered] = useState(false);
-    const trackRef = useRef(null);
-
-    useEffect(() => {
-        let cancelled = false;
-
-        const fetchTrendingEpisodes = async () => {
-            if (!API_KEY || !PLAYLIST_ID) return;
-
-            try {
-                const res = await fetch(
-                    `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet,contentDetails&maxResults=20&playlistId=${PLAYLIST_ID}&key=${API_KEY}`
-                );
-                if (!res.ok) return;
-
-                const data = await res.json();
-                const mapped = (data?.items || [])
-                    .map((it, index) => {
-                        const sn = it?.snippet || {};
-                        const videoId = it?.contentDetails?.videoId;
-                        const thumb =
-                            sn?.thumbnails?.maxres?.url ||
-                            sn?.thumbnails?.high?.url ||
-                            sn?.thumbnails?.medium?.url ||
-                            sn?.thumbnails?.default?.url ||
-                            "";
-
-                        return {
-                            id: videoId || index + 1,
-                            title: sn?.title || "Untitled Episode",
-                            thumb,
-                            videoId: videoId || "",
-                            href: videoId ? `https://www.youtube.com/watch?v=${videoId}` : "#",
-                        };
-                    })
-                    .filter((item) => {
-                        const t = (item.title || "").toLowerCase();
-                        return (
-                            t !== "private video" &&
-                            t !== "deleted video" &&
-                            Boolean(item.thumb) &&
-                            Boolean(item.videoId)
-                        );
-                    });
-
-                if (!mapped.length || cancelled) return;
-
-                const videoIds = mapped.map((item) => item.videoId).filter(Boolean).slice(0, 50);
-                if (!videoIds.length) return;
-
-                const statsRes = await fetch(
-                    `https://www.googleapis.com/youtube/v3/videos?part=statistics&id=${videoIds.join(",")}&key=${API_KEY}`
-                );
-                if (!statsRes.ok) return;
-
-                const statsData = await statsRes.json();
-                const viewMap = {};
-                (statsData?.items || []).forEach((it) => {
-                    const id = it?.id;
-                    const views = Number(it?.statistics?.viewCount || 0);
-                    if (id) viewMap[id] = views;
-                });
-
-                const topFive = mapped?.map((item) => ({ ...item, views: viewMap[item.videoId] || 0 }))
-                    .sort((a, b) => b.views - a.views)
-                    .slice(0, 5)
-                    .map(({ views, ...rest }) => rest);
-
-                if (!cancelled && topFive.length >= 3) {
-                    setItems(topFive);
-                    setActive(0);
-                    setPlayingVideoId("");
-                }
-            } catch (err) {
-                return err
-            }
-        };
-
-        fetchTrendingEpisodes();
-
-        return () => {
-            cancelled = true;
-        };
-    }, [API_KEY, PLAYLIST_ID]);
-
-    const clampIndex = (i) => {
-        const n = items.length;
-        if (!n) return 0;
-        return (i + n) % n;
-    };
-
-    const goToSlide = (index) => {
-        setPlayingVideoId("");
-        setActive(clampIndex(index));
-    };
-
-    const prev = () => goToSlide(active - 1);
-    const next = () => goToSlide(active + 1);
-
-    useEffect(() => {
-        const onKey = (e) => {
-            if (e.key === "ArrowLeft") prev();
-            if (e.key === "ArrowRight") next();
-        };
-        window.addEventListener("keydown", onKey);
-        return () => window.removeEventListener("keydown", onKey);
-    }, [active, items.length]);
-
-    useEffect(() => {
-        if (items.length < 2 || isSliderHovered || Boolean(playingVideoId)) return;
-
-        const intervalId = setInterval(() => {
-            setActive((p) => clampIndex(p + 1));
-        }, 5000);
-
-        return () => clearInterval(intervalId);
-    }, [items.length, isSliderHovered, playingVideoId]);
-
-    const drag = useRef({ down: false, x: 0, moved: false });
-
-    const onDown = (clientX) => {
-        drag.current = { down: true, x: clientX, moved: false };
-    };
-
-    const onMove = (clientX) => {
-        if (!drag.current.down) return;
-        const dx = clientX - drag.current.x;
-        if (Math.abs(dx) > 8) drag.current.moved = true;
-    };
-
-    const onUp = (clientX) => {
-        if (!drag.current.down) return;
-        const dx = clientX - drag.current.x;
-        drag.current.down = false;
-
-        if (Math.abs(dx) < 40) return;
-        if (dx > 0) prev();
-        else next();
-    };
-
-    const onTrackMouseEnter = () => {
-        setIsSliderHovered(true);
-    };
-
-    const onTrackMouseLeave = (clientX) => {
-        setIsSliderHovered(false);
-        onUp(clientX);
-    };
-
-    const idxLeft = clampIndex(active - 1);
-    const idxRight = clampIndex(active + 1);
 
     return (
         <Fragment>
@@ -367,66 +76,18 @@ const Home = () => {
             </section>
 
             <section className="sm:px-10 px-5">
-                <div className="container mx-auto spacing">
-                    <div className={`flex gap-5 sm:flex-row flex-col sm:items-center items-start justify-between sm:mb-10`}>
-                        <h4 className="heading-4 text-white">Trending Episodes</h4>
-
-                        <div className="flex items-center gap-4 sm:mb-0 mb-10">
-                            <button onClick={prev} aria-label="Previous episode" className={`h-10 w-10 rounded-full 
-                                border border-white/20 bg-white/5 text-white hover:bg-white/15 transition flex 
-                                items-center justify-center cursor-pointer`}
-                            >
-                                <IoIosArrowBack />
-                            </button>
-
-                            <button onClick={next} aria-label="Next episode" className={`h-10 w-10 rounded-full 
-                                border border-white/20 bg-white/5 text-white hover:bg-white/15 transition flex 
-                                items-center justify-center cursor-pointer`}
-                            >
-                                <IoIosArrowForward />
-                            </button>
-                        </div>
-                    </div>
-
-                    <div ref={trackRef} className="relative select-none" onMouseUp={(e) => onUp(e.clientX)}
-                        onMouseDown={(e) => onDown(e.clientX)} onMouseMove={(e) => onMove(e.clientX)}
-                        onMouseEnter={onTrackMouseEnter} onMouseLeave={(e) => onTrackMouseLeave(e.clientX)}
-                        onTouchStart={(e) => onDown(e.touches[0].clientX)}
-                        onTouchMove={(e) => onMove(e.touches[0].clientX)}
-                        onTouchEnd={(e) => onUp(e.changedTouches[0].clientX)}
+                <div className="container mx-auto spacing relative">
+                    <p className={`inline-flex w-max items-center rounded-full bg-[#FFFFFF1A] px-4 py-2
+                        caption-2 text-[#F36B21] font-normal`}
                     >
-                        {items?.length >= 3 && (
-                            <div className="grid grid-cols-12 items-center gap-4 md:gap-6">
-                                <EpisodeCard item={items[idxLeft]} variant="side"
-                                    onClick={() => goToSlide(idxLeft)}
-                                />
+                        Latest Episodes
+                    </p>
 
-                                <EpisodeCard item={items[active]} variant="center"
-                                    isPlaying={playingVideoId === items[active]?.videoId}
-                                    onPlay={() => setPlayingVideoId(items[active]?.videoId || "")}
-                                />
+                    <h4 className="heading-4 text-white mt-2.5 font-normal">
+                        Featured Conversations
+                    </h4>
 
-                                <EpisodeCard item={items[idxRight]} variant="side"
-                                    onClick={() => goToSlide(idxRight)}
-                                />
-                            </div>
-                        )}
-
-                        <div className="mt-7 flex items-center justify-center gap-2.5">
-                            {items?.map((_, index) => {
-                                const isOn = index === active
-
-                                return (
-                                    <button key={index} onClick={() => goToSlide(index)}
-                                        className={`h-1.5 rounded-full transition-all
-                                            ${isOn ? "w-7 h-2.5 bg-[#F36B21]" : "w-2.5 h-2.5 bg-white"}
-                                        `}
-                                        aria-label={`Go to slide ${index + 1}`}
-                                    />
-                                );
-                            })}
-                        </div>
-                    </div>
+                    <Playlist mode="home" />
                 </div>
             </section>
 
@@ -503,38 +164,14 @@ const Home = () => {
             </section>
 
             <section className="sm:px-10 px-5">
-                <div className="container mx-auto spacing relative">
-                    <p className={`inline-flex w-max items-center rounded-full bg-[#FFFFFF1A] px-5 py-1.5 
-                        caption-2 text-[#F36B21] font-normal`}
-                    >
-                        Latest Episodes
-                    </p>
-
-                    <h4 className="heading-4 text-white mt-2.5 font-normal">
-                        Featured Conversations
-                    </h4>
-
-                    <Playlist mode="home" />
-                </div>
-            </section>
-
-            <section className="sm:px-10 px-5">
                 <div className="container mx-auto spacing">
                     <div className={`grid grid-cols-1 rounded-[30px] bg-[#2A180E] py-7 md:py-12 px-5 
                         lg:px-12 lg:grid-cols-12 gap-8`}
                     >
                         <div className="lg:col-span-6 flex flex-col justify-center">
-                            <span className={`inline-flex w-max items-center rounded-full bg-white px-5 py-1.5 
-                                caption-2 text-[#F36B21]`}
-                            >
-                                Entrepreneurship
-                            </span>
-
-                            <div className="mt-5">
-                                <Image id="logo" className='w-50 h-13' width={0} height={0} alt="Occams"
-                                    src='/logo/occams-podcast.svg'
-                                />
-                            </div>
+                            <Image id="logo" className='w-50 h-13' width={0} height={0} alt="Occams"
+                                src='/logo/occams-podcast.svg'
+                            />
 
                             <h6 className="mt-6 heading-6 text-[#C4BBBB]">The Thinking Behind the Conversations</h6>
                             <h6 className="mt-5 italic heading-6 text-[#F36B21]">Our Genesis</h6>
@@ -557,6 +194,10 @@ const Home = () => {
                     </div>
                 </div>
             </section>
+
+            <div className="spacing">
+                <TeamWave />
+            </div>
 
             <section className="sm:px-10 px-5">
                 <div className="container mx-auto spacing">

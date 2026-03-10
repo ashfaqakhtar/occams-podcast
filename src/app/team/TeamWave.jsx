@@ -50,10 +50,8 @@ const TeamWave = () => {
     return (
         <Fragment>
             <section className="sm:px-10 px-5">
-                <div className="container mx-auto spacing">
-                    <h4 className="heading-4 text-white text-center">
-                        Meet our leadership.
-                    </h4>
+                <div className="container mx-auto">
+                    <h4 className="heading-4 text-white mb-6">Meet our hosts</h4>
                 </div>
             </section>
 

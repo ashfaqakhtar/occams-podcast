@@ -5,7 +5,7 @@ import { Fragment, useEffect, useMemo, useState } from "react";
 import BtnComponent from "./BtnComponent";
 import { IoIosArrowBack, IoIosArrowDown, IoIosArrowForward } from "react-icons/io";
 
-const Playlist = ({ mode = "page" }) => {
+const Playlist = ({ mode = "page", searchTerm = "" }) => {
     const API_KEY = process.env.NEXT_PUBLIC_YOUTUBE_API_KEY;
     const PLAYLIST_ID = process.env.NEXT_PUBLIC_YOUTUBE_PLAYLIST_ID;
 
@@ -148,19 +148,46 @@ const Playlist = ({ mode = "page" }) => {
         };
     }, [http, API_KEY, PLAYLIST_ID, isHome]);
 
+    const filteredVideos = useMemo(() => {
+        const query = searchTerm.trim().toLowerCase();
+
+        if (!query) return allVideos;
+
+        return allVideos.filter((video) => {
+            const title = video?.title?.toLowerCase() || "";
+            // const desc = video?.desc?.toLowerCase() || "";
+            return title.includes(query);
+        });
+    }, [allVideos, searchTerm]);
+
+
     const totalPages = useMemo(() => {
-        return Math.max(1, Math.ceil(allVideos.length / perPage));
-    }, [allVideos.length, perPage]);
+        return Math.max(1, Math.ceil(filteredVideos.length / perPage));
+    }, [filteredVideos.length, perPage]);
+
+    // const totalPages = useMemo(() => {
+    //     return Math.max(1, Math.ceil(allVideos.length / perPage));
+    // }, [allVideos.length, perPage]);
 
     useEffect(() => {
         if (!isHome) setPage(1);
     }, [perPage, isHome]);
 
+    useEffect(() => {
+        setPage(1);
+    }, [searchTerm]);
+
+    // const pageVideos = useMemo(() => {
+    //     if (isHome) return allVideos.slice(0, 3);
+    //     const start = (page - 1) * perPage;
+    //     return allVideos.slice(start, start + perPage);
+    // }, [allVideos, page, perPage, isHome]);
+
     const pageVideos = useMemo(() => {
-        if (isHome) return allVideos.slice(0, 3);
+        if (isHome) return filteredVideos.slice(0, 3);
         const start = (page - 1) * perPage;
-        return allVideos.slice(start, start + perPage);
-    }, [allVideos, page, perPage, isHome]);
+        return filteredVideos.slice(start, start + perPage);
+    }, [filteredVideos, page, perPage, isHome]);
 
     useEffect(() => {
         if (!pageVideos.length) return;
@@ -232,51 +259,45 @@ const Playlist = ({ mode = "page" }) => {
 
                     return (
                         <div key={data?.videoId} className="flex flex-col gap-5 items-stretch">
-                            <div className="rounded-2xl border-2 border-[#F36B2140]">
-                                <img src={data?.thumb} alt={data?.title} loading="lazy"
-                                    className="rounded-2xl h-full w-full object-cover"
-                                />
-                            </div>
-
                             <div className={`group py-7 px-6 rounded-2xl border-2 border-[#F36B2140] bg-[#341606]
-                                flex flex-col h-full justify-between`}
+                                flex flex-col h-full`}
                             >
-                                <div className="flex flex-col">
-                                    <p className={`inline-flex w-max rounded-full px-4 py-1.5 border-[0.5px]
-                                        caption-2 text-white border-[#FFFFFF5E]`}
-                                    >
-                                        Leadership
-                                    </p>
-
-                                    <h6 className="heading-6 mt-3 text-white">{data?.title}</h6>
+                                <div className="rounded-2xl border-2 border-[#F36B2140]">
+                                    <img src={data?.thumb} alt={data?.title} loading="lazy"
+                                        className="rounded-2xl h-full w-full object-cover mb-5"
+                                    />
                                 </div>
 
-                                <div className="flex flex-col">
-                                    <p className="mt-5 body-3 text-white opacity-50 line-clamp-3">
-                                        {data?.desc || "—"}
-                                    </p>
+                                <div className="flex flex-col  h-full justify-between">
+                                    <h6 className="heading-6 mt-6 text-white">{data?.title}</h6>
 
-                                    <div className="mt-4 flex items-center gap-8 body-3 text-white">
-                                        <span>{dateText}</span>
-                                        <div className="flex items-center gap-2">
-                                            <img src="/logo/clock.svg" alt="Clock" className="w-5 h-5" />
-                                            <span className="mt-0.5px">{dur}</span>
+                                    <div className="flex flex-col">
+                                        <p className="mt-5 body-3 text-white opacity-50 line-clamp-3">
+                                            {data?.desc || "—"}
+                                        </p>
+
+                                        <div className="mt-4 flex items-center gap-8 body-3 text-white">
+                                            <span>{dateText}</span>
+                                            <div className="flex items-center gap-2">
+                                                <img src="/logo/clock.svg" alt="Clock" className="w-5 h-5" />
+                                                <span className="mt-0.5px">{dur}</span>
+                                            </div>
                                         </div>
-                                    </div>
 
-                                    <div className="mt-5 flex sm:flex-row flex-col sm:items-center gap-3.5">
-                                        <BtnComponent btn_title={'Play Episode'} bgColor="bg-[#F36B21]"
-                                            textColor="text-white" className="py-1.5 cta-2 sm:w-30 w-36"
-                                            btn_url={`https://www.youtube.com/watch?v=${data?.videoId}`}
-                                        />
+                                        <div className="mt-5 flex sm:flex-row flex-col sm:items-center gap-3.5">
+                                            <BtnComponent btn_title={'Play Episode'} bgColor="bg-[#F36B21]"
+                                                textColor="text-white" className="py-1.5 cta-2 sm:w-30 w-36"
+                                                btn_url={`https://www.youtube.com/watch?v=${data?.videoId}`}
+                                            />
 
-                                        {/* <button onClick={() => alert("Transcript: YouTube API se direct")}
+                                            {/* <button onClick={() => alert("Transcript: YouTube API se direct")}
                                             className={`inline-flex flex-nowrap py-1.5 cta-2 text-white bg-[#656565]
                                             w-36 items-center rounded-full justify-center whitespace-nowrap gap-2.5 
                                             cursor-pointer`}
                                         >
                                             Show Transcript
                                         </button> */}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -285,7 +306,7 @@ const Playlist = ({ mode = "page" }) => {
                 })}
             </div>
 
-            {!isHome && !error && (
+            {!isHome && !error && filteredVideos.length > 0 && (
                 <Fragment>
                     <div className="sm:mt-10 mt-7 flex items-center justify-between gap-7 sm:flex-row">
                         <div className="relative w-fit">
@@ -305,7 +326,7 @@ const Playlist = ({ mode = "page" }) => {
                         </div>
 
                         <div className="md:flex hidden caption-1 text-white text-center">
-                            {page} - {totalPages} of {allVideos.length}
+                            {page} - {totalPages} of {filteredVideos.length}
                         </div>
 
                         <div className="flex items-center md:gap-3.5 gap-2">
@@ -349,7 +370,7 @@ const Playlist = ({ mode = "page" }) => {
                     </div>
 
                     <div className="flex md:hidden sm:mt-10 mt-7 caption-1 text-white text-center">
-                        {page} - {totalPages} of {allVideos.length}
+                        {page} - {totalPages} of {filteredVideos.length}
                     </div>
                 </Fragment>
             )}

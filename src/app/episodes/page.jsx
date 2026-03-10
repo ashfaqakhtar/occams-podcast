@@ -6,6 +6,7 @@ import Playlist from '@/components/Playlist';
 
 const Episodes = () => {
     const [activeTab, setActiveTab] = useState("all-episodes");
+    const [searchTerm, setSearchTerm] = useState("");
     const scrollerRef = useRef(null);
     const tabRefs = useRef({});
 
@@ -57,9 +58,9 @@ const Episodes = () => {
 
             <section className="sm:px-10 px-5">
                 <div className="container mx-auto spacing relative z-20 -mt-60">
-                    <div className="rounded-full bg-[#FFFFFF1C] backdrop-blur-xl pl-4 sm:pr-8 pr-5 py-3.5">
-                        <div className="flex items-center gap-6.5">
-                            <div ref={scrollerRef} className={`flex-1 overflow-x-auto [-ms-overflow-style:none]
+                    <div className="rounded-full bg-[#FFFFFF1C] backdrop-blur-xl pl-5 pr-5 mx-auto py-3.5 md:w-1/3 w-full">
+                        <div className="flex items-center gap-6.5 justify-end">
+                            {/* <div ref={scrollerRef} className={`flex-1 overflow-x-auto [-ms-overflow-style:none]
                                 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden`}
                             >
                                 <div className="flex items-center sm:gap-5 gap-2 whitespace-nowrap snap-x">
@@ -85,14 +86,27 @@ const Episodes = () => {
                                         )
                                     })}
                                 </div>
-                            </div>
+                            </div> */}
+
+                            <input type="text" value={searchTerm} placeholder="Search Episodes..."
+                                onChange={(e) => setSearchTerm(e.target.value)}
+                                className="w-full bg-transparent outline-none border-none text-white placeholder:text-white/70 body-2"
+                            />
+
+                            {searchTerm && (
+                                <button type="button" onClick={() => setSearchTerm("")}
+                                    className="text-white/70 hover:text-white text-sm cursor-pointer"
+                                >
+                                    Clear
+                                </button>
+                            )}
 
                             <img src="/logo/search-icon.svg" alt="Search Icon" className="w-4 h-4 sm:w-5 sm:h-5" />
                         </div>
                     </div>
 
                     <div className='pt-5 relative z-10'>
-                        <Playlist mode="page" />
+                        <Playlist mode="page" searchTerm={searchTerm} />
                     </div>
                 </div>
             </section>
