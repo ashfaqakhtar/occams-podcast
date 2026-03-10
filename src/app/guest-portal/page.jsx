@@ -100,7 +100,7 @@ const GuestPortal = () => {
                                                 className="h-full object-containe md:flex hidden"
                                             />
                                             <img src="/images/retro-microphone-sm.png" alt="Retro Microphone"
-                                                className="h-full w-full rounded-[18px] object-containe md:hidden flex"
+                                                className="h-full w-full object-containe md:hidden flex"
                                             />
                                         </div>
 

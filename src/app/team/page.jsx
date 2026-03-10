@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react'
-import LeadershipSection from './TeamWave'
+import TeamWave from './TeamWave'
 import BtnComponent from '@/components/BtnComponent'
 
 const Team = () => {
@@ -37,7 +37,7 @@ const Team = () => {
             </section>
 
             <div className="spacing">
-                <LeadershipSection />
+                <TeamWave />
             </div>
 
             <section className="sm:px-10 px-5">
