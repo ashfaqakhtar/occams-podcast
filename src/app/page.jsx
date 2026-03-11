@@ -230,9 +230,9 @@ const Home = () => {
                 </div>
             </section>
 
-            <div className="spacing">
+            {/* <div className="spacing">
                 <EpisodeWave />
-            </div>
+            </div> */}
         </Fragment>
     );
 }
