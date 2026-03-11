@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { Fragment } from "react";
+import { Fragment, useEffect } from "react";
 import BtnComponent from "@/components/BtnComponent";
 import { BADGES_ITEMS, PODCAST_EXISTS } from "@/utils/staticData";
 import Highlights from "@/components/Highlights";
@@ -11,6 +11,99 @@ import Playlist from "@/components/Playlist";
 import TeamWave from "./team/TeamWave";
 
 const Home = () => {
+    useEffect(() => {
+        const MID = () => window.innerHeight / 2;
+        const nodes = Array.from(document.querySelectorAll("[data-split]"));
+
+        nodes.forEach((node) => {
+            const text = node.textContent || "";
+            node.textContent = "";
+
+            const frag = document.createDocumentFragment();
+            const charSpans = [];
+
+            for (let i = 0; i < text.length; i++) {
+                const ch = text[i];
+
+                if (ch === " ") {
+                    frag.appendChild(document.createTextNode(" "));
+                    continue;
+                }
+
+                const span = document.createElement("span");
+                span.className = "subhead-2 text-[#FFFFFF59] char";
+                span.textContent = ch;
+
+                charSpans.push(span);
+                frag.appendChild(span);
+            }
+
+            node.appendChild(frag);
+            node._chars = charSpans;
+            node._activeCount = 0;
+        });
+
+        const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
+
+        function update() {
+            const mid = MID();
+
+            nodes.forEach((node) => {
+                const rect = node.getBoundingClientRect();
+                const chars = node._chars || [];
+                if (!chars.length) return;
+
+                const progress = clamp((mid - rect.top) / Math.max(rect.height, 1), 0, 1);
+                const target = Math.floor(progress * chars.length);
+
+                if (target === node._activeCount) return;
+
+                if (target > node._activeCount) {
+                    for (let i = node._activeCount; i < target; i++) {
+                        const s = chars[i];
+                        if (!s) continue;
+                        s.classList.remove("subhead-2", "text-[#FFFFFF59]");
+                        s.classList.add("subhead-1", "text-[#F36B21]");
+                    }
+                } else {
+                    for (let i = target; i < node._activeCount; i++) {
+                        const s = chars[i];
+                        if (!s) continue;
+                        s.classList.add("subhead-2", "text-[#FFFFFF59]");
+                        s.classList.remove("subhead-1", "text-[#F36B21]");
+                    }
+                }
+
+                node._activeCount = target;
+            });
+        }
+
+        const style = document.createElement("style");
+        style.textContent = `.char { transition: color .18s ease-out; }`;
+        document.head.appendChild(style);
+
+        update();
+        let ticking = false;
+
+        const onScroll = () => {
+            if (!ticking) {
+                requestAnimationFrame(() => {
+                    update();
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        };
+
+        window.addEventListener("scroll", onScroll, { passive: true });
+        window.addEventListener("resize", update);
+
+        return () => {
+            window.removeEventListener("scroll", onScroll);
+            window.removeEventListener("resize", update);
+            style.remove();
+        };
+    }, []);
 
     return (
         <Fragment>
