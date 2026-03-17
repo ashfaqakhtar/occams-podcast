@@ -5,7 +5,7 @@ import BtnComponent from '@/components/BtnComponent'
 const Team = () => {
     return (
         <Fragment>
-            <section className="relative h-[90vh]">
+            <section className="relative h-[70svh]">
                 <div className="absolute inset-0">
                     <div style={{ backgroundImage: "url(/images/team-banner-desktop.webp)" }}
                         className="hidden sm:block h-full bg-cover lg:bg-center md:bg-position-[90%] bg-position-[80%]"

@@ -205,12 +205,12 @@ const Home = () => {
 
                         <div className="col-span-12 lg:col-span-8 lg:mt-0 mt-4 lg:max-w-165">
                             <h6 className="subhead-1 text-[#F36B21]">
-                                Inception to Infinity is a long-form podcast for those building and governing systems.
-                                We explore decision mechanics, capital, and organizational design, prioritizing reasoning
-                                and trade-offs over sound bites.
+                                <span>Inception </span>
 
                                 <span className="text-[#FFFFFF5E]" id="why-we-exist" data-split>
-                                    While modern growth rewards speed, speed rarely rewards clarity. We exist to slow
+                                    to Infinity is a long-form podcast for those building and governing systems.
+                                    We explore decision mechanics, capital, and organizational design, prioritizing reasoning
+                                    and trade-offs over sound bites. While modern growth rewards speed, speed rarely rewards clarity. We exist to slow
                                     down, questioning assumptions and mapping consequences to understand how intention
                                     becomes structure and structure becomes legacy. We examine the foundations before
                                     organizations scale.
