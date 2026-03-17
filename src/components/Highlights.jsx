@@ -100,7 +100,7 @@ const Highlights = () => {
     return (
         <Fragment>
             <section style={{ backgroundImage: `url(/images/highlights-bg.svg)` }} className={`bg-cover bg-center
-                h-[80vh] justify-center items-center relative sm:px-10 px-5 hidden md:flex`}
+                h-[70vh] justify-center items-center relative sm:px-10 px-5 hidden md:flex`}
             >
                 <div className='container mx-auto flex items-center justify-center gap-5 md:gap-6 lg:gap-9'>
                     <VoiceBar height={111} backgroundColor="#CD652E" />
