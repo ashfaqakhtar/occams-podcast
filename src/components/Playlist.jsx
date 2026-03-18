@@ -259,10 +259,10 @@ const Playlist = ({ mode = "page", searchTerm = "" }) => {
 
                     return (
                         <div key={data?.videoId} className="flex flex-col gap-5 items-stretch">
-                            <div className={`group py-7 px-6 rounded-2xl border-2 border-[#F36B2140] bg-[#341606]
+                            <div className={`group p-6 rounded-[18px] border-2 border-[#F36B2140] bg-[#341606]
                                 flex flex-col h-full`}
                             >
-                                <div className="rounded-2xl border-2 border-[#F36B2140]">
+                                <div className="rounded-[18px] border-2 border-[#F36B2140]">
                                     <img src={data?.thumb} alt={data?.title} loading="lazy"
                                         className="rounded-2xl h-full w-full object-cover mb-5"
                                     />
@@ -286,7 +286,7 @@ const Playlist = ({ mode = "page", searchTerm = "" }) => {
 
                                         <div className="mt-5 flex sm:flex-row flex-col sm:items-center gap-3.5">
                                             <BtnComponent btn_title={'Play Episode'} bgColor="bg-[#F36B21]"
-                                                textColor="text-white" className="py-1.5 cta-2 sm:w-30 w-36"
+                                                textColor="text-white" className="py-2 cta-2 sm:w-30 w-36"
                                                 btn_url={`https://www.youtube.com/watch?v=${data?.videoId}`}
                                             />
 

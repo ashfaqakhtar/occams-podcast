@@ -110,7 +110,7 @@ const Home = () => {
             <section className="relative h-screen">
                 <div className="absolute inset-0">
                     <div style={{ backgroundImage: "url(/images/home-banner-desktop.webp)" }}
-                        className="hidden md:block h-full bg-cover lg:bg-center md:bg-position-[70%] bg-position-[80%]"
+                        className="hidden md:block h-full bg-cover lg:bg-center md:bg-position-[20%] bg-position-[80%]"
                     />
 
                     <div className="block md:hidden h-full w-full bg-cover bg-center"
@@ -121,7 +121,7 @@ const Home = () => {
                 <div className='sm:px-10 px-5 h-full'>
                     <div className="container mx-auto h-full">
                         <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 items-center gap-6 h-full">
-                            <div className={`h-full flex flex-row justify-start items-end -mt-10 lg:order-0 order-1`}>
+                            <div className={`h-full hidden sm:flex flex-row justify-start items-end -mt-10 lg:order-0 order-1`}>
                                 <div className="w-max h-max rounded-full bg-white/10 backdrop-blur-[23.4px] px-10 pt-3 pb-4">
                                     <small className="text-white">Listen on:</small>
 
@@ -141,7 +141,7 @@ const Home = () => {
                                 </div>
                             </div>
 
-                            <div className="lg:mt-15 mt-25">
+                            <div className="lg:mt-15 sm:mt-25 h-full flex flex-col sm:justify-center justify-end pb-7.5 sm:pb-0">
                                 {/* <Image id="logo"className='w-max' width={0} height={0} alt="Occams"
                                     src='/logo/occams-podcast.svg'
                                 /> */}
@@ -282,7 +282,7 @@ const Home = () => {
                         </div>
 
                         <div className="lg:col-span-6 flex lg:justify-end">
-                            <img src="/images/conversations-home.webp" alt="Podcast Host" className="w-max h-auto" />
+                            <img src="/images/conversations-home.webp" alt="Podcast Host" className="w-full h-auto" />
                         </div>
                     </div>
                 </div>
