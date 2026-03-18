@@ -36,11 +36,15 @@ const Footer = () => {
                             <div className="col-span-12 lg:col-span-2">
                                 <div className="flex items-center gap-6 text-white lg:justify-evenly">
                                     <Link href="https://x.com" target="_blank">
-                                        X
+                                        <Image className='w-max' width={0} height={0} alt="Occams Podcast"
+                                            src='/logo/twitter.svg'
+                                        />
                                     </Link>
 
                                     <Link href="https://linkedin.com" target="_blank">
-                                        in
+                                        <Image className='w-max' width={0} height={0} alt="Occams Podcast"
+                                            src='/logo/linkedin.svg'
+                                        />
                                     </Link>
                                 </div>
                             </div>
@@ -53,16 +57,12 @@ const Footer = () => {
                 <div className="flex flex-col gap-5 body-2 text-white md:flex-row md:justify-between">
                     <p>© {year} Occams Advisory All rights reserve</p>
 
-                    <div className="flex sm:flex-row flex-col sm:items-center gap-5">
-                        <Link href="/privacy">Privacy</Link>
+                    <div className="flex sm:gap-5 gap-3">
+                        <Link href="/privacy">Privacy Policy</Link>
 
-                        <span className="text-white sm:flex hidden">|</span>
+                        <span className="text-white">|</span>
 
-                        <Link href="/policy">Policy</Link>
-
-                        <span className="text-white sm:flex hidden">|</span>
-
-                        <Link href="/terms">Terms Of Service</Link>
+                        <Link href="/policy">Terms and Conditions</Link>
                     </div>
                 </div>
             </div>

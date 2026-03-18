@@ -12,7 +12,7 @@ const GuestPortal = () => {
             <section className="relative h-[70svh]">
                 <div className="absolute inset-0">
                     <div style={{ backgroundImage: "url(/images/guest-portal-desktop.webp)" }}
-                        className="hidden md:block h-full bg-cover lg:bg-center md:bg-position-[90%] bg-position-[80%]"
+                        className="hidden md:block h-full bg-cover lg:bg-center md:bg-position-[75%] bg-position-[80%]"
                     />
 
                     <div className="block md:hidden h-full w-full bg-cover bg-bottom"
@@ -44,7 +44,7 @@ const GuestPortal = () => {
             <section className="sm:px-10 px-5">
                 <div className="container mx-auto spacing">
                     <div className="grid grid-cols-1 xl:grid-cols-12 gap-6 xl:items-end">
-                        <div className="lg:col-span-5">
+                        {/* <div className="lg:col-span-5">
                             <h4 className="heading-4 text-white">Voices We Invite</h4>
                             <p className="body-1 mt-8 text-[#E8E8E8]">We regularly feature:</p>
 
@@ -100,7 +100,7 @@ const GuestPortal = () => {
                                                 className="h-full object-containe md:flex hidden"
                                             />
                                             <img src="/images/retro-microphone-sm.png" alt="Retro Microphone"
-                                                className="h-full w-full object-containe md:hidden flex"
+                                                className="h-full w-full object-containe md:hidden flex rounded-2xl"
                                             />
                                         </div>
 
@@ -115,6 +115,87 @@ const GuestPortal = () => {
                                     </div>
                                 </div>
                             </div>
+                        </div> */}
+
+                        <div className="lg:col-span-5">
+                            <h4 className="heading-4 text-white">Voices We Invite</h4>
+                            <p className="body-1 mt-8 text-[#E8E8E8]">We regularly feature:</p>
+
+                            <ul className="body-1 mt-5 space-y-2.5 text-[#E8E8E8] list-disc pl-5">
+                                <li>Founders & Operators navigating growth and scale.</li>
+                                <li>Policy Thinkers & Academics examining systems and governance.</li>
+                                <li>Investors & Strategists shaping global capital flows.</li>
+                                <li>Technologists building infrastructure and platforms.</li>
+                                <li>Cultural & Institutional Leaders influencing public thought.</li>
+                            </ul>
+
+                            <p className="mt-6 body-1 text-[#E8E8E8] max-w-md">
+                                We bridge the gap between high-level theory and lived leadership.
+                            </p>
+                        </div>
+
+                        <div className="lg:col-span-7 xl:mt-0 mt-5">
+                            <div className="grid grid-cols-12 gap-5">
+                                <div className="col-span-12 md:col-span-6">
+                                    <img src="/images/radio-personality.png" alt="Radio Personality"
+                                        className="h-full w-full object-containe md:flex hidden"
+                                    />
+
+                                    <img src="/images/radio-personality-sm.png" alt="Radio Personality"
+                                        className="h-full object-containe md:hidden flex"
+                                    />
+                                </div>
+
+                                <div className="col-span-12 md:col-span-6 h-full">
+                                    <div className="grid grid-cols-1 gap-5 h-full">
+                                        <div className="grid">
+                                            <div className='flex md:justify-between gap-6'>
+                                                <div>
+                                                    <img src="/images/nobody-podcast.png" alt="Nobody Podcast"
+                                                        className="h-full object-containe md:flex hidden"
+                                                    />
+
+                                                    <img src="/images/nobody-podcast-sm.png" alt="Nobody Podcast"
+                                                        className="h-full object-containe md:hidden flex"
+                                                    />
+                                                </div>
+
+                                                <div>
+                                                    <img src="/images/female-content.png" alt="Female Content"
+                                                        className="h-full object-containe md:flex hidden"
+                                                    />
+
+                                                    <img src="/images/female-content-sm.png" alt="Female Content"
+                                                        className="h-full object-containe md:hidden flex"
+                                                    />
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div className="grid">
+                                            <div className='flex md:justify-between gap-6'>
+                                                <div>
+                                                    <img src="/images/retro-microphone.png" alt="Retro Microphone"
+                                                        className="h-full object-containe md:flex hidden"
+                                                    />
+                                                    <img src="/images/retro-microphone-sm.png" alt="Retro Microphone"
+                                                        className="h-full object-containe md:hidden flex"
+                                                    />
+                                                </div>
+
+                                                <div>
+                                                    <img src="/images/multiethnic-team.png" alt="Multiethnic Team"
+                                                        className="h-full object-containe md:flex hidden"
+                                                    />
+                                                    <img src="/images/multiethnic-team-sm.png" alt="Multiethnic Team"
+                                                        className="h-full object-containe md:hidden flex"
+                                                    />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -123,7 +204,7 @@ const GuestPortal = () => {
             {/* Your Guest Journey Section */}
             <section className="sm:px-10 px-5">
                 <div className="container mx-auto">
-                    <h4 className="heading-4 spacing text-white">Your Guest Journey</h4>
+                    <h4 className="heading-4 text-white">Your Guest Journey</h4>
 
                     <div className="py-7 overflow-visible sm:overflow-visible md:overflow-visible">
                         <div className="relative flex md:flex-row flex-col justify-center items-center">
@@ -132,7 +213,7 @@ const GuestPortal = () => {
                                 const padding = index === 0 ? "xl:px-12 lg:px-10 md:px-8 px-10" : index === 1 ?
                                     "xl:px-16 lg:px-14 md:px-10 sm:px-14 px-12" : "xl:px-13 lg:px-11 md:px-8 sm:px-11 px-10"
 
-                                const overlap = index !== 0 ? "md:-ml-15 lg:-ml-25 -mt-10 md:mt-0" : "";
+                                const overlap = index !== 0 ? "md:-ml-15 lg:-ml-25 -mt-20 md:mt-0" : "";
 
                                 return (
                                     <div key={index} className={`relative cursor-pointer transition-all duration-300 
@@ -176,7 +257,7 @@ const GuestPortal = () => {
                         </div>
 
                         <div className="lg:col-span-6 flex justify-center lg:justify-end">
-                            <img src="/images/what-to-expect.webp" alt="Podcast Host" className="w-max h-auto" />
+                            <img src="/images/what-to-expect.webp" alt="Podcast Host" className="w-full h-auto" />
                         </div>
                     </div>
                 </div>
@@ -185,7 +266,7 @@ const GuestPortal = () => {
             {/* Frequently asked questions Section */}
             <section className="sm:px-10 px-5">
                 <div className="container mx-auto ">
-                    <h4 className="heading-4 spacing text-white">Frequently asked questions</h4>
+                    <h4 className="heading-4 md:pb-10 pb-6 text-white">Frequently asked questions</h4>
 
                     <div className="space-y-4">
                         {FAQ_ITEMS?.map((item, index) => {
@@ -196,7 +277,7 @@ const GuestPortal = () => {
                                     <button type="button" onClick={() => setOpenIndex(isOpen ? -1 : index)}
                                         className="w-full flex items-center gap-4 px-6 py-4 cursor-pointer"
                                     >
-                                        <h6 className="heading-6 text-white">{item?.title}</h6>
+                                        <h6 className="heading-6 text-white text-start">{item?.title}</h6>
 
                                         <div className={`shrink-0 transition-transform duration-300 ease-in-out 
                                             ${isOpen ? "rotate-180" : "rotate-0"}`}
@@ -230,13 +311,14 @@ const GuestPortal = () => {
                         </p>
 
                         <div className="mt-5">
-                            <button className={`inline-flex flex-nowrap items-center gap-3 rounded-full cursor-pointer 
-                                cta-1 justify-center whitespace-nowrap bg-white text-[#F36B21] py-2 pl-5 pr-2.5
-                                hover:-translate-y-0.5 transition-all duration-300 ease-in-out hover:scale-[1.03]`}
+                            <Link href='/contact#contact-form' className={`inline-flex flex-nowrap items-center gap-3 
+                                rounded-full cursor-pointer cta-1 justify-center whitespace-nowrap bg-white text-[#F36B21]
+                                py-2 pl-5 pr-2.5 hover:-translate-y-0.5 transition-all duration-300 ease-in-out 
+                                hover:scale-[1.03]`}
                             >
                                 <span className="whitespace-nowrap">Send email</span>
                                 <img src='/logo/email-contact.png' alt="Button" className="h-auto w-max shrink-0" />
-                            </button>
+                            </Link>
                         </div>
                     </div>
                 </div>

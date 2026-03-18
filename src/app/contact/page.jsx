@@ -36,23 +36,23 @@ const Contact = () => {
                 </div>
             </section>
 
-            <div className="spacing">
+            <div id='contact-form' className="spacing scroll-mt-20">
                 <ContactWave />
             </div>
 
             <section className="sm:px-10 px-5">
                 <div className="container mx-auto spacing">
                     <div className="w-full rounded-xl bg-[#341606] px-4 lg:px-5 py-4">
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                             {CONTACT_DATA?.map((data, index) => (
-                                <div key={index} className="flex sm:flex-row flex-col items-center gap-4">
+                                <div key={index} className="flex sm:items-center items-start gap-4">
                                     <img src={data?.image} alt={data?.title}
-                                        className="h-auto w-max object-contain mt-1"
+                                        className="h-auto w-max object-contain mt-1 shrink-0"
                                     />
 
-                                    <div className="">
+                                    <div className="min-w-0">
                                         <h6 className="heading-6 text-white">{data?.title}</h6>
-                                        <p className="body-1 text-white sm:mt-1">{data?.sub_title}</p>
+                                        <p className="body-1 text-white sm:mt-1 wrap-break-word">{data?.sub_title}</p>
                                     </div>
                                 </div>
                             ))}

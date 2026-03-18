@@ -27,21 +27,25 @@ function VoiceBar({ height, backgroundColor, className = "", speed = 500 }) {
     );
 }
 
-function VoiceBarHorizontal({ width, backgroundColor, speed = 500, className = "" }) {
+function VoiceBarHorizontal({ backgroundColor, speed = 500, className = "" }) {
     const scale = useMotionValue(1);
 
     useEffect(() => {
         const loop = setInterval(() => {
-            animate(scale, 0.75 + Math.random() * 0.55, { duration: 0.6, ease: "easeInOut" });
+            animate(scale, 1 + Math.random() * 0.15, { duration: 0.6, ease: "easeInOut" });
+            // animate(scale, 0.55 + Math.random() * 0.55, { duration: 0.6, ease: "easeInOut" });
         }, speed);
+
         return () => clearInterval(loop);
     }, [scale, speed]);
 
     return (
-        <motion.div className={`h-10 rounded-full shrink-0 ${className}`} style={{
-            width: width, backgroundColor,
-            scaleX: scale, transformOrigin: "center",
-        }} />
+        <motion.div className={`h-10 rounded-full shrink-0 ${className}`}
+            style={{
+                backgroundColor,
+                scaleX: scale, transformOrigin: "center"
+            }}
+        />
     );
 }
 
@@ -202,10 +206,15 @@ const ContactWave = () => {
                 </div>
 
                 <div className="w-full container mx-auto lg:hidden flex flex-col items-center justify-center gap-7">
-                    <div className="flex flex-col items-center justify-center gap-5">
+                    {/* <div className="flex flex-col items-center justify-center gap-5">
                         <VoiceBarHorizontal width={170} backgroundColor="#EA834C" />
                         <VoiceBarHorizontal width={210} backgroundColor="#F36B21" />
                         <VoiceBarHorizontal width={260} backgroundColor="#E9A986" />
+                    </div> */}
+                    <div className="flex flex-col items-center justify-center gap-5 w-full">
+                        <VoiceBarHorizontal className="w-1/2" backgroundColor="#BF6332" />
+                        <VoiceBarHorizontal className="w-[70%]" backgroundColor="#F36B21" />
+                        <VoiceBarHorizontal className="w-[90%]" backgroundColor="#E9A986" />
                     </div>
 
                     <form className="w-full flex flex-col justify-evenly bg-[#341606] p-5 rounded-2xl"
@@ -270,10 +279,14 @@ const ContactWave = () => {
                         </div>
                     </form>
 
-                    <div className="flex flex-col items-center justify-center gap-5">
+                    {/* <div className="flex flex-col items-center justify-center gap-5">
                         <VoiceBarHorizontal width={260} backgroundColor="#EA834C" />
-                        <VoiceBarHorizontal width={210} backgroundColor="#F36B21" />
                         <VoiceBarHorizontal width={170} backgroundColor="#E9A986" />
+                    </div> */}
+
+                    <div className="flex flex-col items-center justify-center gap-5 w-full">
+                        <VoiceBarHorizontal className="w-[90%]" backgroundColor="#EA834C" />
+                        <VoiceBarHorizontal className="w-[60%]" backgroundColor="#FDBD98" />
                     </div>
                 </div>
             </section>
