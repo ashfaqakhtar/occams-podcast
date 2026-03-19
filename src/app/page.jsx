@@ -224,7 +224,7 @@ const Home = () => {
             <section className="sm:px-10 px-5">
                 <div className="container mx-auto">
                     <div className="py-7 overflow-visible sm:overflow-visible md:overflow-visible">
-                        <div className="relative flex md:flex-row flex-col justify-center items-center">
+                        <div className="relative flex md:flex-row flex-col justify-center items-center md:[&:hover>div:not(:hover)]:blur-[3px] md:[&:hover>div:not(:hover)]:opacity-60">
                             {PODCAST_EXISTS?.map((data, index) => {
                                 const rotation = index === 0 ? "rotate-3" : index === 1 ?
                                     "-rotate-4" : index === 2 ? "rotate-5" : "-rotate-7"

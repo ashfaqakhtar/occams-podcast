@@ -2,12 +2,17 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import Script from "next/script";
 
 const Footer = () => {
     const year = new Date().getFullYear();
 
     return (
         <footer className="sm:px-10 px-5">
+            <Script
+                src="https://cdn.iubenda.com/iubenda.js"
+                strategy="afterInteractive"
+            />
             <div className="container mx-auto spacing">
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
                     <div className="lg:col-span-4 max-w-60 lg:max-w-100">
@@ -24,9 +29,9 @@ const Footer = () => {
                                 <nav className={`grid grid-cols-2 md:grid-cols-1 gap-y-5 md:flex md:items-end md:gap-6 
                                     heading-6 lg:justify-evenly text-white`}
                                 >
-                                    <Link href="/about">About</Link>
+                                    {/* <Link href="/about">About</Link> */}
                                     <Link href="/episodes">Episodes</Link>
-                                    <Link href="/subscribe">Subscribe</Link>
+                                    <Link href="/guest-portal">Guest Portal</Link>
                                     <Link href="https://occamsadvisory.com" target="_blank">
                                         Occams Advisory
                                     </Link>
@@ -37,7 +42,7 @@ const Footer = () => {
                                 <div className="flex items-center gap-6 text-white lg:justify-evenly">
                                     <Link href="https://youtube.com/@occams_advisory?si=OZVBc-R1Ch04GIT1" target="_blank">
                                         <Image className='w-max' width={0} height={0} alt="Occams Podcast"
-                                            src='/images/you-tube.svg'
+                                            src='images/you-tube.svg'
                                         />
                                     </Link>
 
@@ -45,7 +50,7 @@ const Footer = () => {
                                         target="_blank"
                                     >
                                         <Image className='w-max' width={0} height={0} alt="Occams Podcast"
-                                            src='/images/spotify.svg'
+                                            src='images/spotify.svg'
                                         />
                                     </Link>
 
@@ -53,7 +58,7 @@ const Footer = () => {
                                         target="_blank"
                                     >
                                         <Image className='w-max' width={0} height={0} alt="Occams Podcast"
-                                            src='/images/linkedin.svg'
+                                            src='images/linkedin.svg'
                                         />
                                     </Link>
                                 </div>
@@ -68,11 +73,23 @@ const Footer = () => {
                     <p>© {year} Occams Advisory All rights reserve</p>
 
                     <div className="flex sm:gap-5 gap-3">
-                        <Link href="/privacy">Privacy Policy</Link>
+                        <a
+                            href="https://www.iubenda.com/privacy-policy/89600218"
+                            className="iubenda-white iubenda-noiframe iubenda-embed"
+                            title="Privacy Policy"
+                        >
+                            Privacy Policy
+                        </a>
 
                         <span className="text-white">|</span>
 
-                        <Link href="/policy">Terms and Conditions</Link>
+                        <a
+                            href="https://www.iubenda.com/terms-and-conditions/89600218"
+                            className="iubenda-white iubenda-noiframe iubenda-embed"
+                            title="Terms and Conditions"
+                        >
+                            Terms and Conditions
+                        </a>
                     </div>
                 </div>
             </div>
